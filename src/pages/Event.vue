@@ -65,7 +65,12 @@ const imageUrl = computed(() => {
       <div style="height: 32px" />
       <horizontal
         :style="{
-          '--cols': event && event.chat === false ? '3fr 2fr' : '1fr 1fr',
+          '--cols':
+            event && event.chat === false
+              ? '3fr 2fr'
+              : festival.slug === 'other'
+              ? '1fr'
+              : '1fr 1fr',
         }"
       >
         <vertical>
@@ -86,7 +91,7 @@ const imageUrl = computed(() => {
           </h3>
           <vertical v-html="event?.description_english" />
         </vertical>
-        <vertical v-if="festival?.events">
+        <vertical v-if="festival?.events && festival.slug !== 'other'">
           <h3 class="subtitle" v-if="festival?.events.filter(filterPastEvents)">
             Past events
           </h3>
