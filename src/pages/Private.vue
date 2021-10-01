@@ -15,7 +15,12 @@ const streamurls = computed(() => streamkeys.value.map(formatStreamUrl));
 </script>
 
 <template>
-  <horizontal style="--cols: 3.5fr 300px; gap: 0">
+  <horizontal
+    :style="{
+      '--cols': event && event.chat === false ? '1fr 0' : '3.5fr 350px',
+      gap: 0,
+    }"
+  >
     <div style="padding: 48px">
       <video-stream
         v-for="(src, i) in event.streamurls"
@@ -24,21 +29,27 @@ const streamurls = computed(() => streamkeys.value.map(formatStreamUrl));
         :streamkey="event.streamkeys[i]"
         style="width: 100%"
       />
-      <div style="height: 32px" />
-      <h1
-        :style="{
-          fontSize: '60px',
-          lineHeight: '1.2em',
-          paddingRight: event && event.chat === false ? '10vw' : '',
-        }"
-        v-html="event?.title"
-      />
-      <event-data :festival="festival" :event="event" />
-      <div style="height: 32px" />
-      <p style="overflow: auto; width: 500px">{{ event }}</p>
+      <vertical>
+        <div style="height: 32px" />
+        <h1
+          :style="{
+            fontSize: '60px',
+            lineHeight: '1.2em',
+            paddingRight: event && event.chat === false ? '10vw' : '',
+          }"
+          v-html="event?.title"
+        />
+
+        <vertical v-html="event?.description_estonian" />
+        <h3 v-if="event?.description_estonian && event?.description_english">
+          In English
+        </h3>
+        <vertical v-html="event?.description_english" />
+      </vertical>
     </div>
     <div>
       <event-panel
+        v-if="event.chat"
         title="Chat"
         style="background: var(--bglighter); position: sticky; top: 0"
       >
