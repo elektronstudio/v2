@@ -143,6 +143,15 @@ export const getStrapi = () => {
     .then((results) => (strapiPages.value = results.map(processPages)));
 };
 
+export const strapiPrivateEvent = (slug) => {
+  const event = ref([]);
+  strapi
+    .get(`events?_publicationState=preview&published_at_null=true&slug=${slug}`)
+    .json()
+    .then((result) => (event.value = result.map(processEvents)[0]));
+  return event;
+};
+
 export const useTicket = (f, e) => {
   const status = ref("NO_DATA");
   const festival = ref(f);

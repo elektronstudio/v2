@@ -25,6 +25,10 @@ const routes = [
     component: () => import(`./pages/Stream.vue`),
   },
   {
+    path: "/private/:event_slug",
+    component: () => import(`./pages/Private.vue`),
+  },
+  {
     path: "/page/:page_slug",
     component: () => import(`./pages/Page.vue`),
   },
