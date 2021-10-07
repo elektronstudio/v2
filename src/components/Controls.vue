@@ -2,6 +2,7 @@
 import { autoType } from "d3-dsv";
 import { ref, watch } from "vue";
 import { debouncedWatch } from "@vueuse/core";
+import { createMessage } from "../lib";
 
 const file = `
 
@@ -53,10 +54,15 @@ const values = [ref(0), ref(0)];
 
 watch(
   controls.map((c) => c.value),
-  (a, b) => {
-    a.forEach((aa, i) => {
-      if (aa !== b[i]) {
-        console.log(controls[i].type, aa);
+  (controlsValues, prevControlsValues) => {
+    controlsValues.forEach((controlsValue, i) => {
+      if (controlsValue !== prevControlsValues[i]) {
+        const c = controls[i];
+        const message = createMessage({
+          type: c.type,
+          value: controlsValue,
+        });
+        console.log(message);
       }
     });
   },
