@@ -36,7 +36,7 @@ const parse = (config) => {
       return {
         title: "",
         description: "",
-        value: 0,
+        value: ref(0),
         min: 0,
         max: chunk.max > chunk.min ? chunk.max : 10,
         step: 1,
@@ -45,18 +45,46 @@ const parse = (config) => {
     });
 };
 
-const controls = ref(parse(file));
+const controls = parse(file);
 
-watch(controls, () => console.log(controls.value), { deep: true });
+const values = [ref(0), ref(0)];
+
+//watch(values, (meh) => console.log("a", meh), { immediate: true });
+
+watch(
+  controls.map((c) => c.value),
+  (a, b) => {
+    a.forEach((aa, i) => {
+      if (aa !== b[i]) {
+        console.log(controls[i].type, aa);
+      }
+    });
+  },
+  { deep: true }
+);
+
+// watch(
+//   controls,
+//   (controls, prevControls) => {
+//     console.log(controls, prevControls);
+//     // controls.forEach((control, i) => {
+//     //   console.log(control.value + " " + prevControls[i].value);
+//     //   // if (controls[i].value != prevControls[i].value) {
+//     //   //   console.log(control.value, control.type);
+//     //   // }
+//     // });
+//   },
+//   { deep: true }
+// );
 </script>
 
 <template>
   <div style="padding: 32px; display: grid; gap: 24px">
     <div v-for="(c, i) in controls" :key="i" style="display: grid; gap: 0px">
-      <div>{{ c.title }}</div>
+      <div>{{ c.title }} {{ c.value.value }}</div>
       <input
         type="range"
-        v-model.number="c.value"
+        v-model.number="c.value.value"
         :min="c.min"
         :max="c.max"
         :step="c.step"
