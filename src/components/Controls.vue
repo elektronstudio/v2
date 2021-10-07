@@ -46,14 +46,12 @@ const parse = (config) => {
 };
 
 const controls = ref(parse(file));
-const newControls = ref([]);
-const a = ref(0);
+
 watch(controls, () => console.log(controls.value), { deep: true });
 </script>
 
 <template>
   <div style="padding: 32px; display: grid; gap: 24px">
-    <input type="range" v-model.number="a" />
     <div v-for="(c, i) in controls" :key="i" style="display: grid; gap: 0px">
       <div>{{ c.title }}</div>
       <input
@@ -66,7 +64,5 @@ watch(controls, () => console.log(controls.value), { deep: true });
       <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
     </div>
     {{ controls }}
-    <p />
-    {{ newControls }}
   </div>
 </template>
