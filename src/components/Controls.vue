@@ -2,7 +2,7 @@
 import { autoType } from "d3-dsv";
 import { ref, watch } from "vue";
 import { debouncedWatch } from "@vueuse/core";
-import { createMessage } from "../lib";
+import { createMessage, ws } from "../lib";
 
 const file = `
 
@@ -52,19 +52,18 @@ const parse = (config) => {
 
 const controls = parse(file);
 
-const values = [ref(0), ref(0)];
-
 watch(
   controls.map((c) => c.value),
   (controlsValues, prevControlsValues) => {
     controlsValues.forEach((controlsValue, i) => {
       if (controlsValue !== prevControlsValues[i]) {
         const c = controls[i];
-        const message = createMessage({
+        const outgoingMessage = createMessage({
+          channel: "residence",
           type: c.type,
           value: controlsValue,
         });
-        console.log(message);
+        ws.send(outgoingMessage);
       }
     });
   },
