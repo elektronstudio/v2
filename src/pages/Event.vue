@@ -62,6 +62,11 @@ const imageUrl = computed(() => {
         v-html="event?.title"
       />
       <event-data :festival="festival" :event="event" />
+      <controls
+        v-if="event.controls"
+        :channel="route.params.event_slug"
+        :controls="event.controls"
+      />
       <div style="height: 32px" />
       <horizontal
         :style="{

@@ -132,6 +132,7 @@ const submitCode = () => {
       </p>
       <div />
       <input
+        class="chat"
         v-model="manualCode"
         placeholder="Enter the ticket code"
         style="width: 200px"

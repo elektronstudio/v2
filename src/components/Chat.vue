@@ -30,6 +30,7 @@ const { chats, newMessage, onNewMessage, scrollRef, textareaRef } = useChat(
       <span @click="onUserNameChange" style="cursor: pointer">Change</span>
     </div>
     <textarea
+      class="chat"
       style="width: 100%"
       ref="textareaRef"
       v-model="newMessage"

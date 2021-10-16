@@ -58,8 +58,8 @@ a {
   color: inherit;
   /* word-break: break-all; */
 }
-input,
-textarea {
+input.chat,
+textarea.chat {
   background: none;
   border: 2px solid var(--fg);
   border-radius: 3px;
@@ -193,4 +193,45 @@ blockquote {
   letter-spacing: 0.075em;
   line-height: 1.5em;
   color: var(--fgdark);
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  background: gray;
+  height: 2px;
+  outline: none;
+  margin: 2em 0;
+  display: block;
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  input[type="range"] {
+    width: 100%;
+  }
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border: none;
+  border-radius: 1000px;
+  cursor: pointer;
+  background: white;
+}
+
+@media (max-width: 800px) {
+  input[type="range"]::-webkit-slider-thumb {
+    height: 32px;
+    width: 32px;
+  }
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: white;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  background: white;
 }
