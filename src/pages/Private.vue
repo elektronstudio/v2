@@ -39,7 +39,11 @@ const streamurls = computed(() => streamkeys.value.map(formatStreamUrl));
           }"
           v-html="event?.title"
         />
-
+        <controls
+          v-if="event.controls"
+          :channel="route.params.event_slug"
+          :controls="event.controls"
+        />
         <vertical v-html="event?.description_estonian" />
         <h3 v-if="event?.description_estonian && event?.description_english">
           In English

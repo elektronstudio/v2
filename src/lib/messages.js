@@ -1,9 +1,6 @@
-import {
-  computed,
-  ref,
-} from 'vue';
+import { computed, ref } from "vue";
 
-import ReconnectingWebsocket from 'reconnecting-websocket';
+import ReconnectingWebsocket from "reconnecting-websocket";
 
 import {
   config,
@@ -12,7 +9,7 @@ import {
   uniqueCollection,
   userId,
   users,
-} from './';
+} from "./";
 
 // Websocket
 
@@ -26,8 +23,8 @@ export const createMessage = (message) => {
     id: randomId(),
     datetime: new Date().toISOString(),
     userId: userId.value,
-    type: "",
     channel: "",
+    type: "",
     value: "",
     ...message,
   });

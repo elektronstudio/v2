@@ -1,29 +1,16 @@
 <script setup lang="ts">
 import { autoType } from "d3-dsv";
-import { ref, watch } from "vue";
+import { computed, defineProps, ref, watch } from "vue";
 import { debouncedWatch } from "@vueuse/core";
 import { createMessage, ws } from "../lib";
 
-const file = `
+const props = defineProps({
+  channel: { type: String },
+  controls: { type: String },
+});
 
-type: DATA_1
-title: Enter some data here!
-labels: 🤯,:)
-description: Please: enter some data
-control: slider
-min: 0
-max: 5
-step: 1
---- 
-type: DATA_2
-title:  Some other data
-control: button
-min: 0
-step: 0.1
-`;
-
-const parse = (config) => {
-  return config
+const parseControls = (controlsConfig) => {
+  return controlsConfig
     .split(/\n--- \s*\n/g)
     .map((chunk) =>
       chunk
@@ -50,16 +37,18 @@ const parse = (config) => {
     });
 };
 
-const controls = parse(file);
+const controls = computed(() =>
+  props.controls ? parseControls(props.controls) : []
+);
 
-watch(
-  controls.map((c) => c.value),
+debouncedWatch(
+  controls.value.map((c) => c.value),
   (controlsValues, prevControlsValues) => {
     controlsValues.forEach((controlsValue, i) => {
       if (controlsValue !== prevControlsValues[i]) {
-        const c = controls[i];
+        const c = controls.value[i];
         const outgoingMessage = createMessage({
-          channel: "residence",
+          channel: props.channel,
           type: c.type,
           value: controlsValue,
         });
@@ -67,26 +56,12 @@ watch(
       }
     });
   },
-  { deep: true }
+  { deep: true, debounce: 250 }
 );
-
-// watch(
-//   controls,
-//   (controls, prevControls) => {
-//     console.log(controls, prevControls);
-//     // controls.forEach((control, i) => {
-//     //   console.log(control.value + " " + prevControls[i].value);
-//     //   // if (controls[i].value != prevControls[i].value) {
-//     //   //   console.log(control.value, control.type);
-//     //   // }
-//     // });
-//   },
-//   { deep: true }
-// );
 </script>
 
 <template>
-  <div style="padding: 32px; display: grid; gap: 24px">
+  <div style="display: grid; gap: 24px; width: 100%">
     <div v-for="(c, i) in controls" :key="i">
       <div v-if="c.title">{{ c.title }}</div>
       <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
@@ -101,6 +76,5 @@ watch(
         <div v-for="label in c.labels" :key="label">{{ label }}</div>
       </div>
     </div>
-    {{ controls }}
   </div>
 </template>
