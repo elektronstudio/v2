@@ -47,9 +47,9 @@ export const loadMessages = () => {
 
   ws.addEventListener("message", ({ data }) => {
     const message = safeJsonParse(data);
-    if (message?.store === true) {
-      messages.value = [...messages.value, message];
-    }
+    //if (message?.store === true) {
+    messages.value = [...messages.value, message];
+    //}
   });
 };
 
