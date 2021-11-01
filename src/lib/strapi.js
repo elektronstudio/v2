@@ -111,6 +111,11 @@ export const sortNewerCreatedFirst = (a, b) =>
 export const sortOlderFirst = (a, b) =>
   compareAsc(new Date(b.start_at), new Date(a.start_at));
 
+export const sortPinnedFirst = (a, b) => {
+  console.log(a.pinned);
+  return Number(b.pinned) - Number(a.pinned);
+};
+
 export const filterUpcomingEvents = (event) => event.urgency !== "past";
 
 export const filterPastEvents = (event) => event.urgency === "past";
@@ -134,7 +139,8 @@ export const getStrapi = () => {
     .then((results) => {
       strapiFestivals.value = results
         .map(processFestivals)
-        .sort(sortNewerCreatedFirst);
+        .sort(sortNewerCreatedFirst)
+        .sort(sortPinnedFirst);
     });
 
   strapi
