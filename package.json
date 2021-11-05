@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@justinribeiro/lite-youtube": "^0.9.1",
+    "@vime/vue-next": "^5.0.35",
     "@vueuse/core": "^4.7.0",
     "@vueuse/router": "^4.11.0",
     "collisions": "^2.0.13",
