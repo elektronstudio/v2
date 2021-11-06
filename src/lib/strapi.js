@@ -112,7 +112,6 @@ export const sortOlderFirst = (a, b) =>
   compareAsc(new Date(b.start_at), new Date(a.start_at));
 
 export const sortPinnedFirst = (a, b) => {
-  console.log(a.pinned);
   return Number(b.pinned) - Number(a.pinned);
 };
 
