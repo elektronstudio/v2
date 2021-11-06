@@ -28,11 +28,13 @@ const stat = computed(() => {
   );
   return viewers?.count;
 });
+
+const onError = ({ event, data }) => console.log(event, data);
 </script>
 
 <template>
-  <Player muted autoplay playsinline>
-    <Hls autoPiP>
+  <Player muted autoplay playsinline @vm-error="onError">
+    <Hls autoPiP :config="{ config: { maxBufferLength: 60 } }">
       <source :data-src="props.src" type="application/x-mpegURL" />
     </Hls>
     <DefaultUi noControls>
@@ -46,7 +48,7 @@ const stat = computed(() => {
         <icon-eye />
         <smaller>{{ stat }}</smaller>
       </Controls>
-      <Controls pin="bottomRight">
+      <Controls pin="bottomRight" :activeDuration="1000000000">
         <ControlSpacer />
         <VolumeControl />
         <SettingsControl />
