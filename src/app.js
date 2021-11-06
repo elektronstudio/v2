@@ -24,10 +24,10 @@ const routes = [
     path: "/fienta",
     component: () => import(`./pages/Fienta.vue`),
   },
-  {
-    path: "/private/derdinge2021",
-    component: () => import(`./pages/Derdinge.vue`),
-  },
+  // {
+  //   path: "/private/derdinge2021",
+  //   component: () => import(`./pages/Derdinge.vue`),
+  // },
   {
     path: "/stream/:streamkey",
     component: () => import(`./pages/Stream.vue`),
