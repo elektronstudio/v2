@@ -1,25 +1,13 @@
 <script setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
 import { strapiPrivateEvent } from "../lib";
 
-const route = useRoute();
+const src =
+  "https://elektron-live.babahhcdn.com/bb1150-le/x_live_1_c1.smil/playlist.m3u8";
 
-const event = strapiPrivateEvent(route.params.event_slug);
+const streamkey = "x_live_1_c1";
+const slug = "derdinge2021";
 
-const streamkeys = computed(() =>
-  route.params.streamkey.split(",").map((s) => s.trim())
-);
-
-const streamurls = computed(() => {
-  if (streamkeys.value[0] === "elektron") {
-    return [
-      "https://elektron-live.babahhcdn.com/bb1150-le/x_live_1_c1.smil/playlist.m3u8",
-    ];
-  } else {
-    return streamkeys.value.map(formatStreamUrl);
-  }
-});
+const event = strapiPrivateEvent(slug);
 </script>
 
 <template>
@@ -30,13 +18,8 @@ const streamurls = computed(() => {
     }"
   >
     <div style="padding: 48px">
-      <video-stream
-        v-for="(src, i) in event.streamurls"
-        :key="i"
-        :src="src"
-        :streamkey="event.streamkeys[i]"
-        style="width: 100%"
-      />
+      <VideoStreamVine :src="src" :streamkey="streamkey" />
+      <VideoStream :src="src" :streamkey="streamkey" />
       <vertical>
         <div style="height: 32px" />
         <h1
@@ -65,7 +48,7 @@ const streamurls = computed(() => {
         title="Chat"
         style="background: var(--bglighter); position: sticky; top: 0"
       >
-        <chat :channel="route.params.event_slug" />
+        <chat :channel="slug" />
       </event-panel>
     </div>
     <users />
