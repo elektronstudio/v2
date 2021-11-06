@@ -13,10 +13,6 @@ const routes = [
     component: () => import(`./pages/Index.vue`),
   },
   {
-    path: "/newplayer",
-    component: () => import(`./pages/Newplayer.vue`),
-  },
-  {
     path: "/synth",
     component: () => import(`./pages/Synth.vue`),
   },

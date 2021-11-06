@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineProps } from "vue";
+import { computed, defineProps, ref } from "vue";
 import {
   Player,
   Hls,
@@ -28,21 +28,40 @@ const stat = computed(() => {
   );
   return viewers?.count;
 });
+
+const playerRef = ref(null);
+
+const config = {
+  config: {
+    manifestLoadingRetryDelay: 3000,
+    manifestLoadingMaxRetry: Infinity,
+    xhrSetup: (xhr) => {
+      xhr.addEventListener("error", (e) => {
+        console.log("xhrerror", e);
+        if (playerRef.value) {
+          playerRef.value.play();
+        }
+      });
+    },
+  },
+};
+
+const onError = (e) => {
+  if (playerRef.value) {
+    console.log("error", e);
+    playerRef.value.play();
+  }
+};
 </script>
 
 <template>
-  <Player muted autoplay playsinline>
-    <Hls autoPiP>
+  <Player muted autoplay playsinline ref="playerRef" @vmError="onError">
+    <Hls :config="config" autoPiP>
       <source :data-src="props.src" type="application/x-mpegURL" />
     </Hls>
-    <DefaultUi noControls>
+    <DefaultUi noControls hi>
       <Scrim />
-      <Controls
-        v-if="stat"
-        pin="bottomLeft"
-        :hideOnMouseLeave="false"
-        waitForPlaybackStart
-      >
+      <Controls v-if="stat" pin="bottomLeft" :hideOnMouseLeave="false">
         <icon-eye />
         <smaller>{{ stat }}</smaller>
       </Controls>
