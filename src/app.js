@@ -13,10 +13,6 @@ const routes = [
     component: () => import(`./pages/Index.vue`),
   },
   {
-    path: "/newplayer",
-    component: () => import(`./pages/Newplayer.vue`),
-  },
-  {
     path: "/synth",
     component: () => import(`./pages/Synth.vue`),
   },
@@ -24,10 +20,11 @@ const routes = [
     path: "/fienta",
     component: () => import(`./pages/Fienta.vue`),
   },
-  // {
-  //   path: "/private/derdinge2021",
-  //   component: () => import(`./pages/Derdinge.vue`),
-  // },
+  {
+    path: "/private/taavetile",
+    component: () => import(`./pages/Taavetile.vue`),
+  },
+
   {
     path: "/stream/:streamkey",
     component: () => import(`./pages/Stream.vue`),

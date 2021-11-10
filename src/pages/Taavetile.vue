@@ -5,7 +5,7 @@ const src =
   "https://elektron-live.babahhcdn.com/bb1150-le/x_live_1_c1.smil/playlist.m3u8";
 
 const streamkey = "x_live_1_c1";
-const slug = "derdinge2021";
+const slug = "taavetile";
 
 const event = strapiPrivateEvent(slug);
 </script>
@@ -32,7 +32,7 @@ const event = strapiPrivateEvent(slug);
         />
         <controls
           v-if="event.controls"
-          :channel="route.params.event_slug"
+          :channel="slug"
           :controls="event.controls"
         />
         <vertical v-html="event?.description_estonian" />
