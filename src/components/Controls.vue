@@ -11,7 +11,7 @@ const props = defineProps({
 
 const parseControls = (controlsConfig) => {
   return controlsConfig
-    .split(/\n--- \s*\n/g)
+    .split(/\n---\s*\n/g)
     .map((chunk) =>
       chunk
         .split("\n")
@@ -86,7 +86,10 @@ const onSubmit = (i) => {
           :max="c.max"
           :step="c.step"
         />
-        <button v-if="c.control === 'text'" @click="onSubmit(i)">Send</button>
+        &nbsp;
+        <button-medium v-if="c.control === 'text'" @click="onSubmit(i)">
+          Send
+        </button-medium>
       </div>
       <div
         v-if="c.labels"
