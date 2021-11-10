@@ -23,9 +23,10 @@ const parseControls = (controlsConfig) => {
     .map((chunk) => autoType(Object.fromEntries(chunk)))
     .map((chunk) => {
       return {
+        control: chunk.control === "text" ? "text" : "slider",
         title: "",
         description: "",
-        value: ref(0),
+        value: ref(chunk.control === "text" ? "" : 0),
         min: 0,
         max: chunk.max > chunk.min ? chunk.max : 10,
         step: 1,
@@ -47,17 +48,29 @@ debouncedWatch(
     controlsValues.forEach((controlsValue, i) => {
       if (controlsValue !== prevControlsValues[i]) {
         const c = controls.value[i];
-        const outgoingMessage = createMessage({
-          channel: props.channel,
-          type: c.type,
-          value: controlsValue,
-        });
-        ws.send(outgoingMessage);
+        if (c.control === "slider") {
+          const outgoingMessage = createMessage({
+            channel: props.channel,
+            type: c.type,
+            value: controlsValue,
+          });
+          ws.send(outgoingMessage);
+        }
       }
     });
   },
   { deep: true, debounce: 250 }
 );
+
+const onSubmit = (i) => {
+  const c = controls.value[i];
+  const outgoingMessage = createMessage({
+    channel: props.channel,
+    type: c.type,
+    value: c.value.value,
+  });
+  ws.send(outgoingMessage);
+};
 </script>
 
 <template>
@@ -65,14 +78,20 @@ debouncedWatch(
     <div v-for="(c, i) in controls" :key="i">
       <div v-if="c.title">{{ c.title }}</div>
       <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
-      <input
-        type="range"
-        v-model.number="c.value.value"
-        :min="c.min"
-        :max="c.max"
-        :step="c.step"
-      />
-      <div style="display: flex; justify-content: space-between">
+      <div>
+        <input
+          :type="c.control === 'slider' ? 'range' : 'text'"
+          v-model.number="c.value.value"
+          :min="c.min"
+          :max="c.max"
+          :step="c.step"
+        />
+        <button v-if="c.control === 'text'" @click="onSubmit(i)">Send</button>
+      </div>
+      <div
+        v-if="c.labels"
+        style="display: flex; justify-content: space-between"
+      >
         <div v-for="label in c.labels" :key="label">{{ label }}</div>
       </div>
     </div>
