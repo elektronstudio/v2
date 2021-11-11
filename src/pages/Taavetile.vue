@@ -18,7 +18,8 @@ const event = strapiPrivateEvent(slug);
     }"
   >
     <div style="padding: 48px">
-      <VideoStreamVine :src="src" :streamkey="streamkey" />
+      <VideoStreamPlayable :src="src" :streamkey="streamkey" />
+      <!-- <VideoStreamVine :src="src" :streamkey="streamkey" /> -->
       <!-- <VideoStream :src="src" :streamkey="streamkey" /> -->
       <vertical>
         <div style="height: 32px" />
