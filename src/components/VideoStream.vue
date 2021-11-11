@@ -3,6 +3,10 @@ import { defineProps, ref, watch, computed } from "vue";
 import { useFullscreen } from "@vueuse/core";
 import { useVideoStream, emitter, stats, debug } from "../lib";
 
+const isMobileSafari =
+  !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/) &&
+  /iPad|iPhone|iPod/.test(navigator.userAgent);
+
 const props = defineProps({
   src: { type: String },
   streamkey: { type: String, default: "" },
@@ -88,7 +92,7 @@ const stat = computed(() => {
   <div style="position: relative; background: var(--bgdark)" ref="playerRef">
     <video
       ref="videoRef"
-      :controls="debug"
+      :controls="isMobileSafari"
       autoplay
       playsinline
       loop
@@ -111,7 +115,7 @@ const stat = computed(() => {
         </div>
       </Transition>
     </slot>
-    <transition name="fade">
+    <transition name="fade" v-if="!isMobileSafari">
       <div>
         <flex
           v-if="stat && status === 'playing'"
