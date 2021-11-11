@@ -34,10 +34,9 @@ export const useVideoStream = (src) => {
   );
 
   const playSafariHls = () => {
-    // @todo clear timeout on prop change / unmount
-
     videoRef.value.src = videoSrc.value;
 
+    /*
     timeout = setInterval(() => {
       videoRef.value.src = src;
     }, retryDelay);
@@ -53,6 +52,18 @@ export const useVideoStream = (src) => {
       timeout = setInterval(() => {
         videoRef.value.src = videoSrc.value;
       }, retryDelay);
+    });
+    */
+
+    const statuses =
+      "abort canplay canplaythrough durationchange emptied encrypted ended error interruptbegin interruptend loadeddata loadedmetadata loadstart mozaudioavailable pause play playing progress ratechange seeked seeking stalled suspend timeupdate volumechange waiting".split(
+        " "
+      );
+
+    statuses.forEach((s) => {
+      videoRef.value.addEventListener(s, (e) => {
+        console.log(s.toUpperCase());
+      });
     });
   };
 
