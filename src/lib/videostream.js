@@ -36,6 +36,23 @@ export const useVideoStream = (src) => {
   const playSafariHls = () => {
     videoRef.value.src = videoSrc.value;
 
+    let prevEnd = 0;
+    setInterval(() => {
+      if (videoRef.value.seekable.length >= 1) {
+        const currentEnd = videoRef.value.seekable.end(0);
+        //console.log(prevEnd, currentEnd);
+        if (prevEnd === currentEnd) {
+          videoRef.value.src = videoSrc.value;
+          videoRef.value.play();
+        }
+        prevEnd = currentEnd;
+      }
+    }, 10000);
+
+    // setInterval(() => {
+    //   videoRef.value.src = videoSrc.value;
+    // }, 2000);
+
     /*
     timeout = setInterval(() => {
       videoRef.value.src = src;
@@ -54,17 +71,6 @@ export const useVideoStream = (src) => {
       }, retryDelay);
     });
     */
-
-    const statuses =
-      "abort canplay canplaythrough durationchange emptied encrypted ended error interruptbegin interruptend loadeddata loadedmetadata loadstart mozaudioavailable pause play playing progress ratechange seeked seeking stalled suspend timeupdate volumechange waiting".split(
-        " "
-      );
-
-    statuses.forEach((s) => {
-      videoRef.value.addEventListener(s, (e) => {
-        console.log(s.toUpperCase());
-      });
-    });
   };
 
   const playHls = () => {
@@ -94,9 +100,36 @@ export const useVideoStream = (src) => {
         hls.startLoad();
       }
     });
+
+    let prevEnd = 0;
+    setInterval(() => {
+      if (videoRef.value.seekable.length >= 1) {
+        const currentEnd = videoRef.value.seekable.end(0);
+        //console.log(prevEnd, currentEnd);
+        if (prevEnd === currentEnd) {
+          hls.loadSource(videoSrc.value);
+          hls.startLoad();
+          if (videoRef.value) {
+            videoRef.value.play();
+          }
+        }
+        prevEnd = currentEnd;
+      }
+    }, 10000);
   };
 
   onMounted(() => {
+    const statuses =
+      "abort canplay canplaythrough durationchange emptied encrypted ended interruptbegin interruptend loadeddata loadedmetadata loadstart mozaudioavailable pause play playing progress ratechange seeked seeking stalled suspend timeupdate volumechange waiting".split(
+        " "
+      );
+
+    statuses.forEach((s) => {
+      videoRef.value.addEventListener(s, (e) => {
+        //console.log(s.toUpperCase());
+      });
+    });
+
     videoRef.value.addEventListener("loadeddata", (e) => {
       status.value = "loading";
       width.value =
