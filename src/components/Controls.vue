@@ -42,6 +42,10 @@ const controls = computed(() =>
   props.controls ? parseControls(props.controls) : []
 );
 
+const hasSubmit = computed(() =>
+  controls.value.find((c) => c.control === "submit")
+);
+
 debouncedWatch(
   controls.value.map((c) => c.value),
   (controlsValues, prevControlsValues) => {
@@ -71,6 +75,19 @@ const onSubmit = (i) => {
   });
   ws.send(outgoingMessage);
 };
+
+const onFormSubmit = () => {
+  controls.value
+    .filter((c) => c.control !== "submit")
+    .forEach((c) => {
+      const outgoingMessage = createMessage({
+        channel: props.channel,
+        type: c.type,
+        value: c.value.value,
+      });
+      ws.send(outgoingMessage);
+    });
+};
 </script>
 
 <template>
@@ -80,6 +97,7 @@ const onSubmit = (i) => {
       <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
       <div>
         <input
+          v-if="c.control !== 'submit'"
           :type="c.control === 'slider' ? 'range' : 'text'"
           v-model.number="c.value.value"
           :min="c.min"
@@ -87,10 +105,16 @@ const onSubmit = (i) => {
           :step="c.step"
         />
         &nbsp;
-        <button-medium v-if="c.control === 'text'" @click="onSubmit(i)">
+        <button-medium
+          v-if="!hasSubmit && c.control === 'text'"
+          @click="onSubmit(i)"
+        >
           Send
         </button-medium>
       </div>
+      <button-medium v-if="c.control === 'submit'" @click="onFormSubmit()">
+        Send
+      </button-medium>
       <div
         v-if="c.labels"
         style="display: flex; justify-content: space-between"
