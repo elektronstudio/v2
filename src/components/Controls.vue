@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { autoType } from "d3-dsv";
 import { computed, defineProps, ref, watch } from "vue";
-import { debouncedWatch } from "@vueuse/core";
-import { createMessage, ws } from "../lib";
+import { debouncedWatch, useStorage } from "@vueuse/core";
+import { createMessage, ws, unique } from "../lib";
+
+const submitted = useStorage("elektron_submitted", []);
 
 const props = defineProps({
   channel: { type: String },
@@ -46,6 +48,8 @@ const hasSubmit = computed(() =>
   controls.value.find((c) => c.control === "submit")
 );
 
+const isSubmitted = computed(() => submitted.value.includes(props.channel));
+
 debouncedWatch(
   controls.value.map((c) => c.value),
   (controlsValues, prevControlsValues) => {
@@ -77,9 +81,11 @@ const onSubmit = (i) => {
 };
 
 const onFormSubmit = () => {
-  controls.value
-    .filter((c) => c.control !== "submit")
-    .forEach((c) => {
+  const submissions = controls.value.filter(
+    (c) => c.control !== "submit" && c.value.value !== ""
+  );
+  if (submissions.length) {
+    submissions.forEach((c) => {
       const outgoingMessage = createMessage({
         channel: props.channel,
         type: c.type,
@@ -87,11 +93,13 @@ const onFormSubmit = () => {
       });
       ws.send(outgoingMessage);
     });
+    submitted.value = unique([...submitted.value, props.channel]);
+  }
 };
 </script>
 
 <template>
-  <div style="display: grid; gap: 24px; width: 100%">
+  <div style="display: grid; gap: 24px; width: 100%" v-if="!isSubmitted">
     <div v-for="(c, i) in controls" :key="i">
       <div v-if="c.title">{{ c.title }}</div>
       <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
