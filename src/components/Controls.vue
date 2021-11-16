@@ -99,10 +99,13 @@ const onFormSubmit = () => {
 </script>
 
 <template>
+  <button-medium @click="submitted = []" v-if="isSubmitted"
+    >Back to questions</button-medium
+  >
   <div
     style="
       display: grid;
-      gap: 24px;
+      gap: 12px;
       width: 100%;
       position: fixed;
       padding: 64px;
@@ -112,6 +115,7 @@ const onFormSubmit = () => {
       left: 0;
       z-index: 100000;
       background: rgba(0, 0, 0, 0.9);
+      overflow: auto;
     "
     v-if="!isSubmitted"
   >
