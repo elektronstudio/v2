@@ -20,10 +20,10 @@ const routes = [
     path: "/fienta",
     component: () => import(`./pages/Fienta.vue`),
   },
-  // {
-  //   path: "/private/taavetile",
-  //   component: () => import(`./pages/Taavetile.vue`),
-  // },
+  {
+    path: "/private/taavetile",
+    component: () => import(`./pages/Taavetile.vue`),
+  },
   {
     path: "/stream/:streamkey",
     component: () => import(`./pages/Stream.vue`),
