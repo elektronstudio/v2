@@ -1,12 +1,14 @@
 <script setup>
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { strapiPrivateEvent, parseStreamkey } from "../lib";
 
 const route = useRoute();
 
 const event = strapiPrivateEvent(route.params.event_slug);
-const stream = computed(() => parseStreamkey(event.streamkey));
+const stream = computed(() => {
+  return parseStreamkey(event.value.streamkey);
+});
 </script>
 
 <template>
