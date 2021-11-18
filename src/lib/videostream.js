@@ -1,6 +1,6 @@
 import { isRef, onMounted, onUnmounted, ref, watch } from "vue";
 
-import { debug, replace, config } from ".";
+import { debug, replace, config, split } from ".";
 
 import Hls from "hls.js";
 
@@ -167,10 +167,29 @@ export const useVideoStream = (src) => {
   return { videoRef, status, width, height };
 };
 
-export const formatStreamUrl = (streamkey) => {
+export const formatStreamkey = (streamkey) => {
+  return streamkey === config.streamTranscodeKeyIn
+    ? config.streamTranscodeKeyOut
+    : streamkey;
+};
+
+const formatStreamurl = (streamkey) => {
   if (streamkey.endsWith("m3u8")) {
     return streamkey;
+  } else if (streamkey === config.streamTranscodeKeyIn) {
+    return replace(config.streamTranscodeUrl, {
+      streamkey: config.streamTranscodeKeyOut,
+    });
   } else {
     return replace(config.streamUrl, { streamkey });
   }
+};
+
+export const parseStreamkey = (streamkey) => {
+  const streamkeys = computed(() => split(unref(streamkey)));
+
+  const streamurls = computed(() =>
+    computed(() => streamkeys.value.map(formatStreamurl))
+  );
+  return { streamkeys: streamkeys.map(formatStreamkey), streamurls };
 };
