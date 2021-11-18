@@ -10,7 +10,6 @@ import {
   replace,
 } from "../lib";
 import { onBeforeRouteUpdate } from "vue-router";
-import { parseStreamkey } from ".";
 
 export const strapi = ky.extend({
   prefixUrl: config.strapiUrl,
