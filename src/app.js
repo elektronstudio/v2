@@ -24,10 +24,10 @@ const routes = [
     path: "/test",
     component: () => import(`./pages/Test.vue`),
   },
-  {
-    path: "/private/taavetile",
-    component: () => import(`./pages/Taavetile.vue`),
-  },
+  // {
+  //   path: "/private/taavetile",
+  //   component: () => import(`./pages/Taavetile.vue`),
+  // },
   {
     path: "/stream/:streamkey",
     component: () => import(`./pages/Stream.vue`),

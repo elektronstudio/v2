@@ -175,13 +175,13 @@ export const useVideoStream = (src) => {
   return { videoRef, status, width, height };
 };
 
-const formatStreamkey = (streamkey) => {
+const formatStreamkey = (streamkey = "") => {
   return streamkey === config.streamTranscodeKeyIn
     ? config.streamTranscodeKeyOut
     : streamkey;
 };
 
-export const formatStreamUrl = (streamkey) => {
+export const formatStreamUrl = (streamkey = "") => {
   if (streamkey.endsWith("m3u8")) {
     return streamkey;
   } else if (streamkey === config.streamTranscodeKeyIn) {
@@ -193,7 +193,7 @@ export const formatStreamUrl = (streamkey) => {
   }
 };
 
-export const parseStreamkey = (streamkey) => {
+export const parseStreamkey = (streamkey = "") => {
   const streamkeys = split(streamkey);
   const streamurls = streamkeys.map(formatStreamUrl);
   return { streamkeys: streamkeys.map(formatStreamkey), streamurls };

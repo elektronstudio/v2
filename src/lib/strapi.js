@@ -10,6 +10,7 @@ import {
   replace,
 } from "../lib";
 import { onBeforeRouteUpdate } from "vue-router";
+import { parseStreamkey } from ".";
 
 export const strapi = ky.extend({
   prefixUrl: config.strapiUrl,
@@ -41,10 +42,6 @@ const processEvents = (event) => {
     ? formatMarkdown(event.description_english)
     : null;
   event.urgency = dateUrgency(new Date(event.start_at), new Date(event.end_at));
-  event.streamkeys = event.streamkey
-    ? event.streamkey.split(",").map((s) => s.trim())
-    : [];
-  event.streamurls = event.streamkeys.map(formatStreamUrl);
 
   if (event.festival?.fienta_id) {
     event.festival.fienta_url = replace(config.fientaTicketUrl, {
