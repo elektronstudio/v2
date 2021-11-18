@@ -1,4 +1,12 @@
-import { isRef, onMounted, onUnmounted, ref, watch } from "vue";
+import {
+  isRef,
+  onMounted,
+  onUnmounted,
+  ref,
+  watch,
+  computed,
+  unref,
+} from "vue";
 
 import { debug, replace, config, split } from ".";
 
@@ -167,13 +175,13 @@ export const useVideoStream = (src) => {
   return { videoRef, status, width, height };
 };
 
-export const formatStreamkey = (streamkey) => {
+const formatStreamkey = (streamkey) => {
   return streamkey === config.streamTranscodeKeyIn
     ? config.streamTranscodeKeyOut
     : streamkey;
 };
 
-const formatStreamurl = (streamkey) => {
+export const formatStreamUrl = (streamkey) => {
   if (streamkey.endsWith("m3u8")) {
     return streamkey;
   } else if (streamkey === config.streamTranscodeKeyIn) {
@@ -186,10 +194,7 @@ const formatStreamurl = (streamkey) => {
 };
 
 export const parseStreamkey = (streamkey) => {
-  const streamkeys = computed(() => split(unref(streamkey)));
-
-  const streamurls = computed(() =>
-    computed(() => streamkeys.value.map(formatStreamurl))
-  );
+  const streamkeys = split(streamkey);
+  const streamurls = streamkeys.map(formatStreamUrl);
   return { streamkeys: streamkeys.map(formatStreamkey), streamurls };
 };

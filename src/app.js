@@ -21,6 +21,10 @@ const routes = [
     component: () => import(`./pages/Fienta.vue`),
   },
   {
+    path: "/test",
+    component: () => import(`./pages/Test.vue`),
+  },
+  {
     path: "/private/taavetile",
     component: () => import(`./pages/Taavetile.vue`),
   },
