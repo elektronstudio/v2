@@ -100,7 +100,7 @@ const onFormSubmit = () => {
 
 <template>
   <button-medium @click="submitted = []" v-if="isSubmitted"
-    >Back to questions</button-medium
+    >Tagasi küsimuste juurde</button-medium
   >
   <div
     style="
@@ -136,11 +136,11 @@ const onFormSubmit = () => {
           v-if="!hasSubmit && c.control === 'text'"
           @click="onSubmit(i)"
         >
-          Send
+          Saada
         </button-medium>
       </div>
       <button-medium v-if="c.control === 'submit'" @click="onFormSubmit()">
-        Send
+        Saada
       </button-medium>
       <div
         v-if="c.labels"
