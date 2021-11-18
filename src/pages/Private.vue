@@ -1,24 +1,13 @@
 <script setup>
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { strapiPrivateEvent } from "../lib";
+import { strapiPrivateEvent, parseStreamkey } from "../lib";
 
 const route = useRoute();
 
 const event = strapiPrivateEvent(route.params.event_slug);
-
-const streamkeys = computed(() =>
-  route.params.streamkey.split(",").map((s) => s.trim())
-);
-
-const streamurls = computed(() => {
-  if (streamkeys.value[0] === "elektron") {
-    return [
-      "https://elektron-live.babahhcdn.com/bb1150-le/x_live_1_c1.smil/playlist.m3u8",
-    ];
-  } else {
-    return streamkeys.value.map(formatStreamUrl);
-  }
+const stream = computed(() => {
+  return parseStreamkey(event.value.streamkey);
 });
 </script>
 
@@ -31,10 +20,10 @@ const streamurls = computed(() => {
   >
     <div style="padding: 48px">
       <video-stream
-        v-for="(src, i) in event.streamurls"
+        v-for="(src, i) in stream.streamurls"
         :key="i"
         :src="src"
-        :streamkey="event.streamkeys[i]"
+        :streamkey="stream.streamkeys[i]"
         style="width: 100%"
       />
       <vertical>

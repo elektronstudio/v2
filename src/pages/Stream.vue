@@ -1,25 +1,20 @@
 <script setup>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { formatStreamUrl } from "../lib";
+import { parseStreamkey } from "../lib";
 
 const route = useRoute();
-
-const streamkeys = computed(() =>
-  route.params.streamkey.split(",").map((s) => s.trim())
-);
-
-const streamurls = computed(() => streamkeys.value.map(formatStreamUrl));
+const stream = computed(() => parseStreamkey(route.params.streamkey));
 </script>
 
 <template>
   <horizontal style="--cols: 3.5fr 300px; gap: 0">
     <div style="padding: 48px">
       <video-stream
-        v-for="(src, i) in streamurls"
+        v-for="(src, i) in stream.streamurls"
         :key="i"
         :src="src"
-        :streamkey="streamkeys[i]"
+        :streamkey="stream.streamkeys[i]"
         style="width: 100%"
       />
     </div>
@@ -28,7 +23,7 @@ const streamurls = computed(() => streamkeys.value.map(formatStreamUrl));
         title="Chat"
         style="background: var(--bglighter); position: sticky; top: 0"
       >
-        <chat :channel="streamkeys[0]" />
+        <chat :channel="stream.streamkeys[0]" />
       </event-panel>
     </div>
     <users />

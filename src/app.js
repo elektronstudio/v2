@@ -21,9 +21,13 @@ const routes = [
     component: () => import(`./pages/Fienta.vue`),
   },
   {
-    path: "/private/taavetile",
-    component: () => import(`./pages/Taavetile.vue`),
+    path: "/test",
+    component: () => import(`./pages/Test.vue`),
   },
+  // {
+  //   path: "/private/taavetile",
+  //   component: () => import(`./pages/Taavetile.vue`),
+  // },
   {
     path: "/stream/:streamkey",
     component: () => import(`./pages/Stream.vue`),

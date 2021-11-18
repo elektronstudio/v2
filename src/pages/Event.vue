@@ -8,6 +8,7 @@ import {
   filterUpcomingEvents,
   filterPastEvents,
   useTicket,
+  parseStreamkey,
 } from "../lib";
 
 const route = useRoute();
@@ -20,6 +21,10 @@ const festival = computed(() =>
 const event = computed(() =>
   (strapiEvents.value || []).find((e) => e.slug === route.params.event_slug)
 );
+const stream = computed(() => {
+  return parseStreamkey(event.value.streamkey);
+});
+
 const festivalRoute = computed(() => `/${festival.value?.slug}`);
 
 const { status } = useTicket(festival, event);
@@ -45,11 +50,11 @@ const imageUrl = computed(() => {
     <vertical style="padding: 48px">
       <div v-if="hasTicketOrFree" style="width: 100%">
         <component
-          v-for="(src, i) in event?.streamurls"
+          v-for="(src, i) in stream.streamurls"
           :key="i"
           :is="event?.is_360 ? 'video-stream-three' : 'video-stream'"
           :src="src"
-          :streamkey="event?.streamkeys?.[0]"
+          :streamkey="stream.streamkeys[0]"
         />
       </div>
       <div v-if="hasTicketOrFree" />
@@ -63,9 +68,9 @@ const imageUrl = computed(() => {
       />
       <event-data :festival="festival" :event="event" />
       <controls
-        v-if="event.controls"
+        v-if="event?.controls"
         :channel="route.params.event_slug"
-        :controls="event.controls"
+        :controls="event?.controls"
       />
       <div style="height: 32px" />
       <horizontal
@@ -73,7 +78,7 @@ const imageUrl = computed(() => {
           '--cols':
             event && event.chat === false
               ? '3fr 2fr'
-              : festival.slug === 'other'
+              : festival && festival.slug === 'other'
               ? '1fr'
               : '1fr 1fr',
         }"

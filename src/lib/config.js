@@ -1,5 +1,8 @@
 export const config = {
   streamUrl: import.meta.env.VITE_STREAM_URL || "",
+  streamTranscodeUrl: import.meta.env.VITE_STREAM_TRANSCODE_URL || "",
+  streamTranscodeKeyIn: import.meta.env.VITE_STREAM_TRANSCODE_KEY_IN || "",
+  streamTranscodeKeyOut: import.meta.env.VITE_STREAM_TRANSCODE_KEY_OUT || "",
   eventsUrl1: import.meta.env.VITE_EVENTS_URL_1 || "",
   eventsUrl2: import.meta.env.VITE_EVENTS_URL_2 || "",
   eventsUrl3: import.meta.env.VITE_EVENTS_URL_3 || "",
