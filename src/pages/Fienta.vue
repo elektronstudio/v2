@@ -122,36 +122,42 @@ const submitCode = () => {
       <img style="height: 96px" src="/favicon.svg" />
       <div />
       <h1>
-        Somehow we cannot validate your ticket.<br />But let's try to get you
+        Somehow we can not validate your ticket.<br />But let's try to get you
         in!
       </h1>
       <div />
       <p>
-        There is a ticket code in your ticket email,<br />just below the "Sisene
-        üritusele / Enter event" blue button
+        There is a <b>ticket code</b> in your ticket email,<br />just below the
+        "Sisene üritusele / Enter event" blue button
       </p>
       <div />
       <input
         class="chat"
         v-model="manualCode"
-        placeholder="Enter the ticket code"
-        style="width: 200px"
+        placeholder="Enter ticket code"
+        style="width: 200px; height: auto"
       />
-      <button-big @click="submitCode">Submit code</button-big>
+      <button-big @click="submitCode">Submit ticket code</button-big>
       <div />
       <a
         v-if="config.fientaPublicUrl"
         :href="config.fientaPublicUrl"
         target="_blank"
-        style="text-decoration: underline"
+        style="text-decoration: underline; opacity: 0.5"
       >
         No tickets yet? Get them here
       </a>
       <div />
-      <p v-if="config.phoneUrl">
-        <span style="opacity: 0.5">Having problems with getting in? Call</span>
+      <p v-if="config.phoneUrl || config.emailUrl">
+        <span style="opacity: 0.5">Having problems? Contact us at</span>
         &nbsp;
-        <a :href="config.phoneUrl">{{ config.phoneUrl.replace("tel:", "") }}</a>
+        <a v-if="config.phoneUrl" :href="config.phoneUrl">{{
+          config.phoneUrl.replace("tel:", "")
+        }}</a>
+        or
+        <a v-if="config.emailUrl" :href="config.emailUrl">{{
+          config.emailUrl.replace("mailto://", "")
+        }}</a>
       </p>
     </overlay>
     <layout>
