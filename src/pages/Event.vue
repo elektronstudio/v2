@@ -140,7 +140,7 @@ const imageUrl = computed(() => {
         <chat v-if="hasTicketOrFree" :channel="route.params.event_slug" />
       </event-panel>
     </div>
-    <users />
+    <!-- <users /> -->
     <layout>
       <template #top-left>
         <back-button :to="festivalRoute" />
@@ -149,7 +149,7 @@ const imageUrl = computed(() => {
         <theme-button />
       </template>
       <template #bottom-left>
-        <users-button />
+        <!-- <users-button /> -->
       </template>
     </layout>
   </horizontal>

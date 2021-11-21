@@ -51,7 +51,7 @@ const event = strapiPrivateEvent(slug);
         <chat :channel="slug" />
       </event-panel>
     </div>
-    <users />
+    <!-- <users /> -->
     <layout>
       <template #top-left>
         <back-button />
@@ -60,7 +60,7 @@ const event = strapiPrivateEvent(slug);
         <theme-button />
       </template>
       <template #bottom-left>
-        <users-button />
+        <!-- <users-button /> -->
       </template>
     </layout>
   </horizontal>

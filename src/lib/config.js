@@ -26,7 +26,7 @@ export const config = {
   strapiUrl: import.meta.env.VITE_STRAPI_URL || "",
   // @TODO:remove these two
   theme: import.meta.env.VITE_THEME || 0,
-  userUpdateRate: 30 * 1000,
-  userUpdatedSinceLimit: 30 * 1000,
-  messageDelay: 50,
+  userUpdateRate: 10 * 30 * 1000, // was 30 * 1000
+  userUpdatedSinceLimit: 10 * 30 * 1000, // was 30 * 1000
+  messageDelay: 150, // was 50
 };
