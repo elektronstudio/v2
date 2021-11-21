@@ -26,7 +26,7 @@ const stream = computed(() => parseStreamkey(route.params.streamkey));
         <chat :channel="stream.streamkeys[0]" />
       </event-panel>
     </div>
-    <users />
+    <!-- <users /> -->
     <layout>
       <template #top-left>
         <back-button />
@@ -35,7 +35,7 @@ const stream = computed(() => parseStreamkey(route.params.streamkey));
         <theme-button />
       </template>
       <template #bottom-left>
-        <users-button />
+        <!-- <users-button /> -->
       </template>
     </layout>
   </horizontal>

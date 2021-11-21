@@ -69,7 +69,7 @@ const imageUrl = computed(() => {
         :image="true"
       />
     </vertical>
-    <users />
+    <!-- <users /> -->
     <layout>
       <template #top-left>
         <back-button />
@@ -78,7 +78,7 @@ const imageUrl = computed(() => {
         <theme-button />
       </template>
       <template #bottom-left>
-        <users-button />
+        <!-- <users-button /> -->
       </template>
     </layout>
   </horizontal>

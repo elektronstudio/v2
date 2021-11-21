@@ -57,7 +57,7 @@ const stream = computed(() => {
         <chat :channel="route.params.event_slug" />
       </event-panel>
     </div>
-    <users />
+    <!-- <users /> -->
     <layout>
       <template #top-left>
         <back-button />
@@ -66,7 +66,7 @@ const stream = computed(() => {
         <theme-button />
       </template>
       <template #bottom-left>
-        <users-button />
+        <!-- <users-button /> -->
       </template>
     </layout>
   </horizontal>
