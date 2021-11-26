@@ -22,7 +22,7 @@ const event = computed(() =>
   (strapiEvents.value || []).find((e) => e.slug === route.params.event_slug)
 );
 const stream = computed(() => {
-  return parseStreamkey(event.value.streamkey);
+  return parseStreamkey(event.value?.streamkey);
 });
 
 const festivalRoute = computed(() => `/${festival.value?.slug}`);
@@ -38,6 +38,8 @@ const imageUrl = computed(() => {
     ? event.value.images[0].formats.small.url
     : "";
 });
+
+const activeStream = ref(0);
 </script>
 
 <template>
@@ -51,6 +53,7 @@ const imageUrl = computed(() => {
       <div v-if="hasTicketOrFree" style="width: 100%">
         <component
           v-for="(src, i) in stream.streamurls"
+          v-show="i === activeStream"
           :key="i"
           :is="event?.is_360 ? 'video-stream-three' : 'video-stream'"
           :src="src"
@@ -58,6 +61,19 @@ const imageUrl = computed(() => {
         />
       </div>
       <div v-if="hasTicketOrFree" />
+      <div
+        v-if="stream.streamurls && stream.streamurls.length > 1"
+        style="display: flex; gap: 8px"
+      >
+        <button-medium
+          v-for="(_, i) in stream.streamurls"
+          :key="i"
+          @click="activeStream = i"
+          :style="{ background: activeStream === i ? '#333' : '' }"
+        >
+          Camera {{ i + 1 }}
+        </button-medium>
+      </div>
       <h1
         :style="{
           fontSize: '60px',
