@@ -1,5 +1,5 @@
 <script setup>
-import { computed, watch } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { strapiPrivateEvent, parseStreamkey } from "../lib";
 
@@ -7,8 +7,10 @@ const route = useRoute();
 
 const event = strapiPrivateEvent(route.params.event_slug);
 const stream = computed(() => {
-  return parseStreamkey(event.value.streamkey);
+  return parseStreamkey(event.value?.streamkey);
 });
+
+const activeStream = ref(0);
 </script>
 
 <template>
@@ -21,13 +23,26 @@ const stream = computed(() => {
     <div style="padding: 48px">
       <video-stream
         v-for="(src, i) in stream.streamurls"
+        v-show="i === activeStream"
         :key="i"
         :src="src"
         :streamkey="stream.streamkeys[i]"
         style="width: 100%"
       />
       <vertical>
-        <div style="height: 32px" />
+        <div
+          v-if="stream.streamurls && stream.streamurls.length > 1"
+          style="display: flex; gap: 8px; margin-top: 24px"
+        >
+          <button-medium
+            v-for="(_, i) in stream.streamurls"
+            :key="i"
+            @click="activeStream = i"
+            :style="{ background: activeStream === i ? '#333' : '' }"
+          >
+            Camera {{ i + 1 }}
+          </button-medium>
+        </div>
         <h1
           :style="{
             fontSize: '60px',
