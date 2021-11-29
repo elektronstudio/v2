@@ -7,7 +7,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <vertical style="gap: 4px">
+  <vertical>
     <h2 v-html="episode.title" />
+    <p v-html="episode['content:encoded']" />
+    <audio controls :src="episode?.enclosure.url" />
   </vertical>
 </template>
