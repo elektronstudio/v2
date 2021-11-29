@@ -27,7 +27,6 @@ fetch(rssUrl)
   .then((rss) => {
     parser.parseString(rss.contents).then((f) => (feed.value = f));
   });
-watchEffect(() => console.log(feed.value?.items));
 </script>
 <template>
   <horizontal
@@ -76,12 +75,12 @@ watchEffect(() => console.log(feed.value?.items));
       <vertical style="opacity: 0.7" v-html="festival?.description_estonian" />
       <vertical style="opacity: 0.7" v-html="festival?.description_english" />
     </vertical>
-    <vertical style="gap: 24px">
+    <vertical style="gap: 24px" v-if="feed?.items">
       <div style="height: 8px" />
       <h3 class="subtitle">Latest episodes</h3>
       <vertical style="gap: 48px">
         <episode-card
-          v-for="(episode, i) in feed.items"
+          v-for="(episode, i) in feed?.items"
           :key="i"
           :episode="episode"
       /></vertical>
