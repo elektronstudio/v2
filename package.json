@@ -22,9 +22,7 @@
     "marked": "^2.0.1",
     "mitt": "^2.1.0",
     "plausible-tracker": "^0.3.1",
-    "podcast-feed-parser": "^1.0.4",
     "reconnecting-websocket": "^4.4.0",
-    "rss-parser": "^3.12.0",
     "three": "^0.126.1",
     "tone": "^14.7.77",
     "vue": "^3.0.11",
@@ -35,8 +33,6 @@
     "@vue/compiler-sfc": "^3.0.11",
     "eslint": "^7.23.0",
     "eslint-plugin-vue": "^7.8.0",
-    "stream": "^0.0.2",
-    "timers": "^0.1.1",
     "vite": "^2.1.5",
     "vite-plugin-fonts": "^0.1.5"
   },
