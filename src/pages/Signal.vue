@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import Parser from "rss-parser/dist/rss-parser.js";
 
 import { strapiFestivals } from "../lib";
@@ -16,14 +16,17 @@ const imageUrl = computed(() => {
     : "";
 });
 
-// const rssUrl =
-//   "https://api.allorigins.win/get?url=https://elektronsignal.captivate.fm/rssfeed";
-// const rss = await fetch(rssUrl).then((res) => res.json());
-// let parser = new Parser();
+let feed = ref(null);
 
-// const r = await parser.parseString(rss.contents);
+const rssUrl =
+  "https://api.allorigins.win/get?url=https://elektronsignal.captivate.fm/rssfeed";
+let parser = new Parser();
 
-// console.log(r);
+fetch(rssUrl)
+  .then((res) => res.json())
+  .then((rss) => {
+    parser.parseString(rss.contents).then((f) => (feed.value = f));
+  });
 </script>
 <template>
   <horizontal
@@ -51,21 +54,7 @@ const imageUrl = computed(() => {
     <vertical style="gap: 24px">
       <div style="height: 8px" />
       <h3 class="subtitle">Latest episodes</h3>
-      <event-card
-        v-for="(event, i) in upcomingEvents"
-        :key="i"
-        :festival="festival"
-        :event="event"
-        :image="true"
-      />
-      <h3 class="subtitle">Past events!</h3>
-      <event-card
-        v-for="(event, i) in pastEvents"
-        :key="i"
-        :festival="festival"
-        :event="event"
-        :image="true"
-      />
+      {{ feed }}
     </vertical>
     <!-- <users /> -->
     <layout>
