@@ -1,9 +1,9 @@
 <script setup>
-import { defineProps, useContext, ref, watch, computed } from "vue";
+import { defineProps, defineEmits, ref, watch, computed } from "vue";
 import { useMouse } from "../lib";
 
 const props = defineProps({ x: { default: null }, y: { default: null } });
-const { emit } = useContext();
+const emit = defineEmits();
 
 const draggableRef = ref(0);
 
