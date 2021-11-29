@@ -1,5 +1,7 @@
 <script setup>
 import { computed } from "vue";
+import Parser from "rss-parser/dist/rss-parser.js";
+
 import { strapiFestivals } from "../lib";
 
 const slug = "signal";
@@ -13,6 +15,15 @@ const imageUrl = computed(() => {
     ? festival.value.images[0].formats.small.url
     : "";
 });
+
+// const rssUrl =
+//   "https://api.allorigins.win/get?url=https://elektronsignal.captivate.fm/rssfeed";
+// const rss = await fetch(rssUrl).then((res) => res.json());
+// let parser = new Parser();
+
+// const r = await parser.parseString(rss.contents);
+
+// console.log(r);
 </script>
 <template>
   <horizontal
