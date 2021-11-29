@@ -1,3 +1,4 @@
+import { computed } from "vue";
 import {
   compareDesc,
   differenceInMinutes,
@@ -9,7 +10,6 @@ import {
 import { useNow } from "@vueuse/core";
 
 import { sentencecase } from "./";
-import { computed } from "vue-demi";
 
 const { now } = useNow({ options: 1000 });
 
