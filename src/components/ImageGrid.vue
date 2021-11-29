@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, useContext, ref, computed, watch } from "vue";
+import { defineProps, useSlots, ref, computed, watch } from "vue";
 
 const props = defineProps({
   ratio: {
@@ -7,7 +7,7 @@ const props = defineProps({
   },
 });
 
-const { slots } = useContext();
+const slots = useSlots();
 
 const count = ref(1);
 
