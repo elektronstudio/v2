@@ -99,26 +99,10 @@ const onFormSubmit = () => {
 </script>
 
 <template>
-  <button-medium @click="submitted = []" v-if="isSubmitted"
+  <!-- <button-medium @click="submitted = []" v-if="isSubmitted"
     >Tagasi küsimuste juurde</button-medium
-  >
-  <div
-    style="
-      display: grid;
-      gap: 12px;
-      width: 100%;
-      position: fixed;
-      padding: 64px;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 100000;
-      background: rgba(0, 0, 0, 0.9);
-      overflow: auto;
-    "
-    v-if="!isSubmitted"
-  >
+  > -->
+  <div style="width: 100%" v-if="!isSubmitted">
     <div v-for="(c, i) in controls" :key="i">
       <div v-if="c.title">{{ c.title }}</div>
       <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
@@ -151,3 +135,18 @@ const onFormSubmit = () => {
     </div>
   </div>
 </template>
+
+<!--
+display: block;
+gap: 12px;
+width: 100%;
+position: fixed;
+padding: 64px;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+z-index: 100000;
+background: rgba(0, 0, 0, 0.9);
+overflow: auto;
+-->
