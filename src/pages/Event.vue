@@ -50,7 +50,7 @@ const activeStream = ref(0);
       gap: 0,
     }"
   >
-    <vertical style="padding: 48px">
+    <vertical style="padding: var(--gap-6)">
       <div v-if="hasTicketOrFree" style="width: 100%">
         <component
           v-for="(src, i) in stream.streamurls"
@@ -106,18 +106,21 @@ const activeStream = ref(0);
           />
           <EContent v-html="event?.description_estonian" />
           <!-- <div style="height: 16px" /> -->
-          <h3 v-if="event?.description_estonian && event?.description_english">
+          <ETitle
+            style="opacity: 0.5"
+            v-if="event?.description_estonian && event?.description_english"
+          >
             In English
-          </h3>
+          </ETitle>
           <EContent v-html="event?.description_english" />
         </vertical>
         <vertical v-if="festival?.events && festival.slug !== 'other'">
-          <h3
-            class="subtitle"
+          <ETitle
+            style="opacity: 0.5"
             v-if="festival?.events.filter(filterUpcomingEvents).length"
           >
             Upcoming events
-          </h3>
+          </ETitle>
           <event-card
             v-for="(event, i) in festival?.events.filter(filterUpcomingEvents)"
             :key="i"
@@ -125,12 +128,12 @@ const activeStream = ref(0);
             :event="event"
           />
           <div style="height: 32px" />
-          <h3
-            class="subtitle"
+          <ETitle
+            style="opacity: 0.5"
             v-if="festival?.events.filter(filterPastEvents).length"
           >
             Past events
-          </h3>
+          </ETitle>
           <event-card
             v-for="(event, i) in festival?.events.filter(filterPastEvents)"
             :key="i"
@@ -144,10 +147,10 @@ const activeStream = ref(0);
       <event-panel
         :title="hasTicketOrFree ? 'Chat' : ''"
         style="
-          background: var(--bglighter);
           position: sticky;
           top: 0;
           height: 100vh;
+          border-left: 1px solid var(--gray-500);
         "
       >
         <chat v-if="hasTicketOrFree" :channel="route.params.event_slug" />

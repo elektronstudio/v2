@@ -51,7 +51,7 @@ const upcomingEvents = computed(() =>
       style="
         border: 1px solid var(--gray-500);
         transform: translateX(-2px);
-        gap: 32px;
+        gap: 24px;
         padding: var(--p-6);
       "
       v-if="upcomingEvents.length"

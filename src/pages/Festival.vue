@@ -31,7 +31,7 @@ const imageUrl = computed(() => {
 <template>
   <horizontal
     style="--cols: auto 1fr 1fr; gap: 0"
-    :style="{ '--cols': imageUrl ? 'auto 1fr 1fr' : '50px 1fr 1.5fr' }"
+    :style="{ '--cols': imageUrl ? 'auto 1fr 1fr' : '140px 1fr 1.5fr' }"
   >
     <div style="padding: var(--p-5); border: 1px solid var(--gray-500)">
       <img
@@ -55,7 +55,9 @@ const imageUrl = computed(() => {
         transform: translateX(-1px);
       "
     >
-      <h3 class="subtitle">Upcoming events</h3>
+      <ETitle style="opacity: 0.5" v-if="upcomingEvents?.length"
+        >Upcoming events</ETitle
+      >
       <event-card
         v-for="(event, i) in upcomingEvents"
         :key="i"
@@ -63,7 +65,9 @@ const imageUrl = computed(() => {
         :event="event"
         :image="true"
       />
-      <h3 class="subtitle" v-if="pastEvents?.length">Past events</h3>
+      <ETitle style="opacity: 0.5" v-if="pastEvents?.length"
+        >Past events</ETitle
+      >
       <event-card
         v-for="(event, i) in pastEvents"
         :key="i"

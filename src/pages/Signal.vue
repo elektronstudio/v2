@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watchEffect } from "vue";
+import { ETitle, EContent } from "elektro";
 import Parser from "rss-parser/dist/rss-parser.js";
 
 import { strapiFestivals } from "../lib";
@@ -29,56 +30,36 @@ fetch(rssUrl)
   });
 </script>
 <template>
-  <horizontal
-    style="padding: 48px; --cols: auto 1fr 1fr"
-    :style="{ '--cols': imageUrl ? 'auto 1fr 1fr' : '1fr 1.75fr' }"
-  >
-    <div>
-      <img
-        v-if="imageUrl"
-        :src="imageUrl"
-        style="
-          width: 150px;
-          height: 150px;
-          aspect-ratio: 1;
-          object-fit: cover;
-          border-radius: 10000px;
-          transform: translate(-25px, 25px) scale(1.5);
-        "
-      />
-    </div>
-    <vertical>
-      <div style="height: 8px" />
-
-      <h1
-        style="font-size: 80px; line-height: 1em"
-        v-html="festival?.title.replace('.', '<wbr />.')"
-      />
-      <horizontal
-        style="gap: 8px; align-items: center; --cols: 1fr 0 1fr 1fr 1fr"
-      >
-        <a href="https://elektronsignal.captivate.fm/spotify" target="_blank">
-          <icon-spotify style="color: white; width: 42px; height: 42px"
+  <horizontal style="--cols: 1fr 1fr; gap: 0">
+    <vertical style="padding: var(--p-8); border: 1px solid var(--gray-500)">
+      <ETitle size="lg" v-html="festival?.title" />
+      <div style="display: flex; gap: var(--gap-2)">
+        <a
+          style="transform: translateY(-3px)"
+          href="https://elektronsignal.captivate.fm/spotify"
+          target="_blank"
+        >
+          <icon-spotify style="color: white; width: 32px; height: 32px"
         /></a>
-        <div />
         <a href="https://elektronsignal.captivate.fm/apple" target="_blank">
-          <icon-applepodcasts style="color: white; width: 32px; height: 32px"
+          <icon-applepodcasts style="color: white; width: 24px; height: 24px"
         /></a>
         <a href="hhttps://elektronsignal.captivate.fm/google" target="_blank">
-          <icon-googlepodcasts style="color: white; width: 32px; height: 32px"
+          <icon-googlepodcasts style="color: white; width: 24px; height: 24px"
         /></a>
         <a href="https://elektronsignal.captivate.fm/rssfeed" target="_blank">
-          <icon-rss style="color: white; width: 32px; height: 32px" />
+          <icon-rss style="color: white; width: 24px; height: 24px" />
         </a>
-      </horizontal>
-      <div style="height: 8px" />
-      <vertical style="opacity: 0.7" v-html="festival?.description_estonian" />
-      <vertical style="opacity: 0.7" v-html="festival?.description_english" />
+      </div>
+      <EContent v-html="festival?.description_estonian" />
+      <EContent v-html="festival?.description_english" />
     </vertical>
-    <vertical style="gap: 24px" v-if="feed?.items">
-      <div style="height: 8px" />
-      <h3 class="subtitle">Latest episodes</h3>
-      <vertical style="gap: 48px">
+    <vertical
+      style="padding: var(--p-8); border: 1px solid var(--gray-500; gap: 24px; transform: translateX(-1px)"
+      v-if="feed?.items"
+    >
+      <ETitle style="opacity: 0.5">Latest episodes</ETitle>
+      <vertical style="gap: 32px">
         <episode-card
           v-for="(episode, i) in feed?.items"
           :key="i"
