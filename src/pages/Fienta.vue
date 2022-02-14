@@ -116,15 +116,15 @@ const submitCode = () => {
 <template>
   <div>
     <overlay v-if="!showForm">
-      <h1>Validating ticket...</h1>
+      <ETitle size="lg">Validating ticket...</ETitle>
     </overlay>
     <overlay v-if="showForm">
       <img style="height: 96px" src="/favicon.svg" />
       <div />
-      <h1>
+      <ETitle size="lg">
         Somehow we can not validate your ticket.<br />But let's try to get you
         in!
-      </h1>
+      </ETitle>
       <div />
       <p>
         There is a <b>ticket code</b> in your ticket email,<br />just below the
@@ -137,7 +137,7 @@ const submitCode = () => {
         placeholder="Enter ticket code"
         style="width: 200px; height: auto"
       />
-      <button-big @click="submitCode">Submit ticket code</button-big>
+      <EButton @click="submitCode">Submit ticket code</EButton>
       <div />
       <a
         v-if="config.fientaPublicUrl"

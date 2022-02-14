@@ -46,7 +46,7 @@ const imageUrl = computed(() => {
     />
     <vertical>
       <div style="height: 8px" />
-      <h1 style="font-size: 80px; line-height: 1em" v-html="festival?.title" />
+      <ETitle size="lg" v-html="festival?.title" />
       <vertical v-html="festival?.description_estonian" />
       <vertical v-html="festival?.description_english" />
     </vertical>

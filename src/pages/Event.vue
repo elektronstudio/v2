@@ -74,14 +74,7 @@ const activeStream = ref(0);
           Camera {{ i + 1 }}
         </button-medium>
       </div>
-      <h1
-        :style="{
-          fontSize: '60px',
-          lineHeight: '1.2em',
-          paddingRight: event && event.chat === false ? '10vw' : '',
-        }"
-        v-html="event?.title"
-      />
+      <ETitle size="lg" v-html="event?.title" />
       <event-data :festival="festival" :event="event" />
       <controls
         v-if="event?.controls"
@@ -147,10 +140,10 @@ const activeStream = ref(0);
       <event-panel
         :title="hasTicketOrFree ? 'Chat' : ''"
         style="
-          background: var(--bglighter);
           position: sticky;
           top: 0;
           height: 100vh;
+          border-left: 1px solid var(--gray-600);
         "
       >
         <chat v-if="hasTicketOrFree" :channel="route.params.event_slug" />

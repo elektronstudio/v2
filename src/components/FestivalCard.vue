@@ -39,7 +39,7 @@ const bgImageStyle = computed(() => {
   align-items: center;
   justify-content: center;
   text-align: center;
-  border-radius: 10000px;
+  border-radius: 16px;
   padding: 16px;
 }
 .strapi-festival > * {

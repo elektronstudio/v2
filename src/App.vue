@@ -15,6 +15,8 @@ loadMessages();
 refreshUser();
 refreshUsers();
 plausible.enableAutoPageviews();
+
+import "elektro/style.css";
 </script>
 
 <template>

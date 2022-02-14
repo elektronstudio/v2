@@ -35,15 +35,16 @@ const { chats, newMessage, onNewMessage, scrollRef, textareaRef } = useChat(
       ref="textareaRef"
       v-model="newMessage"
       placeholder="Write a chat message here"
-    ></textarea>
-    <button-medium @click="onNewMessage">Send chat message</button-medium>
+    />
+    <EButton size="xs" @click="onNewMessage">Send chat message</EButton>
   </vertical>
 </template>
 
 <style>
 .chat {
   grid-template-rows: 1fr auto auto;
-  height: 83vh;
+  height: 80vh;
+  width: 100%;
 }
 .chat-cards {
   display: grid;

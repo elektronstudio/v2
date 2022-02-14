@@ -12,7 +12,7 @@ const page = computed(() =>
   <horizontal style="padding: 48px; --cols: 1fr 5fr 1fr">
     <div />
     <vertical>
-      <h1 style="font-size: 80px; line-height: 1em" v-html="page?.title" />
+      <ETitle size="lg" v-html="page?.title" />
       <vertical v-html="page?.description_estonian" />
       <vertical v-html="page?.description_english" />
     </vertical>

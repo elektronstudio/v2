@@ -71,4 +71,10 @@ Object.entries(components).forEach(([path, component]) => {
   app.component(name, defineAsyncComponent(component));
 });
 
+import { ETitle, EButton, EFormTextArea, EProductionCard } from "elektro";
+app.component("ETitle", ETitle);
+app.component("EButton", EButton);
+app.component("EFormTextArea", EFormTextArea);
+app.component("EProductionCard", EProductionCard);
+
 app.mount("#app");

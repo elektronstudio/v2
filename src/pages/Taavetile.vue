@@ -22,7 +22,8 @@ const event = strapiPrivateEvent(slug);
       <VideoStream :src="src" :streamkey="streamkey" />
       <vertical>
         <div style="height: 32px" />
-        <h1
+        <ETitle
+          size="lg"
           :style="{
             fontSize: '60px',
             lineHeight: '1.2em',

@@ -27,11 +27,17 @@ const upcomingEvents = computed(() =>
     <vertical>
       <!-- <pre>{{ strapiFestivals }}</pre> -->
       <horizontal style="--cols: 1fr 1fr; gap: 16px" v-if="strapiFestivals">
-        <festival-card
+        <router-link
           v-for="(festival, i) in strapiFestivals"
           :key="i"
-          :festival="festival"
-        />
+          :to="festival.slug"
+        >
+          <EProductionCard
+            :title="festival.title"
+            :thumbnail="festival?.images?.[0]?.formats?.small?.url"
+            style="width: 100%"
+          />
+        </router-link>
       </horizontal>
     </vertical>
     <vertical style="gap: 32px" v-if="upcomingEvents.length">
