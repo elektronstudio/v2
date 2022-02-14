@@ -1,4 +1,6 @@
 <script setup>
+import * as E from "elektro";
+console.log({ ...E });
 import {
   loadEvents,
   loadMessages,
@@ -25,6 +27,7 @@ plausible.enableAutoPageviews();
       </Transition>
     </RouterView>
   </div>
+  <e-window-border />
 </template>
 
 <style>

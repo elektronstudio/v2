@@ -97,6 +97,7 @@ blockquote {
 
 .icon {
   cursor: pointer;
+  transform: scale(0.8);
 }
 .icon:hover {
   filter: brightness(80%);
