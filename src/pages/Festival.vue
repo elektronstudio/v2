@@ -1,6 +1,7 @@
 <script setup>
 import { toRefs, computed } from "vue";
 import { useRoute } from "vue-router";
+import { ETitle, EContent } from "elektro";
 import {
   strapiFestivals,
   filterUpcomingEvents,
@@ -29,29 +30,31 @@ const imageUrl = computed(() => {
 </script>
 <template>
   <horizontal
-    style="padding: 48px; --cols: auto 1fr 1fr"
-    :style="{ '--cols': imageUrl ? 'auto 1fr 1fr' : '1fr 1.75fr' }"
+    style="--cols: auto 1fr 1fr; gap: 0"
+    :style="{ '--cols': imageUrl ? 'auto 1fr 1fr' : '50px 1fr 1.5fr' }"
   >
-    <img
-      v-if="imageUrl"
-      :src="imageUrl"
-      style="
-        width: 150px;
-        height: 150px;
-        aspect-ratio: 1;
-        object-fit: cover;
-        border-radius: 10000px;
-        transform: translate(-25px, 25px) scale(1.5);
-      "
-    />
-    <vertical>
-      <div style="height: 8px" />
-      <h1 style="font-size: 80px; line-height: 1em" v-html="festival?.title" />
-      <vertical v-html="festival?.description_estonian" />
-      <vertical v-html="festival?.description_english" />
+    <div style="padding: var(--p-5); border: 1px solid var(--gray-500)">
+      <img
+        v-if="imageUrl"
+        :src="imageUrl"
+        style="width: 256px; height: 256px; aspect-ratio: 1; object-fit: cover"
+      />
+    </div>
+    <vertical style="padding: var(--p-5)">
+      <ETitle size="lg" v-html="festival?.title" />
+      <EContent
+        style="letter-spacing: 0.01em"
+        v-html="festival?.description_estonian"
+      />
+      <EContent v-html="festival?.description_english" />
     </vertical>
-    <vertical style="gap: 24px">
-      <div style="height: 8px" />
+    <vertical
+      style="
+        border: 1px solid var(--gray-500);
+        padding: var(--p-5);
+        transform: translateX(-1px);
+      "
+    >
       <h3 class="subtitle">Upcoming events</h3>
       <event-card
         v-for="(event, i) in upcomingEvents"
@@ -60,7 +63,7 @@ const imageUrl = computed(() => {
         :event="event"
         :image="true"
       />
-      <h3 class="subtitle">Past events</h3>
+      <h3 class="subtitle" v-if="pastEvents?.length">Past events</h3>
       <event-card
         v-for="(event, i) in pastEvents"
         :key="i"

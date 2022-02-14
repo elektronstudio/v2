@@ -25,10 +25,9 @@ import { config } from "../lib";
 <style scoped>
 .strapi-social {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
-  justify-items: end;
-  gap: var(--gap-1);
+  gap: var(--gap-2) 0;
 }
 @media (max-width: 800px) {
   .strapi-social {

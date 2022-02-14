@@ -6,7 +6,7 @@
 <style scoped>
 .desktop {
   display: block;
-  font-size: 75px;
+  font-size: 64px;
   line-height: 0.75em;
   font-weight: 700;
 }

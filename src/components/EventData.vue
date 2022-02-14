@@ -41,7 +41,7 @@ const { status } = useTicket(festival, event);
   <vertical v-if="festival && event" style="gap: 4px">
     <flex
       v-if="status !== 'FREE'"
-      style="gap: 12px"
+      style="gap: 12px; font-size: 0.9em"
       :style="{
         color:
           event.urgency === 'past'

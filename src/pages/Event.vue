@@ -2,6 +2,7 @@
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useStorage, whenever } from "@vueuse/core";
+import { ETitle, EContent } from "elektro";
 import {
   strapiFestivals,
   strapiEvents,
@@ -74,21 +75,14 @@ const activeStream = ref(0);
           Camera {{ i + 1 }}
         </button-medium>
       </div>
-      <h1
-        :style="{
-          fontSize: '60px',
-          lineHeight: '1.2em',
-          paddingRight: event && event.chat === false ? '10vw' : '',
-        }"
-        v-html="event?.title"
-      />
+      <ETitle size="lg" v-html="event?.title" />
       <event-data :festival="festival" :event="event" />
       <controls
         v-if="event?.controls"
         :channel="route.params.event_slug"
         :controls="event?.controls"
       />
-      <div style="height: 32px" />
+      <div />
       <horizontal
         :style="{
           '--cols':
@@ -110,12 +104,12 @@ const activeStream = ref(0);
               aspect-ratio: 16/9;
             "
           />
-          <vertical v-html="event?.description_estonian" />
+          <EContent v-html="event?.description_estonian" />
           <!-- <div style="height: 16px" /> -->
           <h3 v-if="event?.description_estonian && event?.description_english">
             In English
           </h3>
-          <vertical v-html="event?.description_english" />
+          <EContent v-html="event?.description_english" />
         </vertical>
         <vertical v-if="festival?.events && festival.slug !== 'other'">
           <h3
@@ -131,7 +125,10 @@ const activeStream = ref(0);
             :event="event"
           />
           <div style="height: 32px" />
-          <h3 class="subtitle" v-if="festival?.events.filter(filterPastEvents)">
+          <h3
+            class="subtitle"
+            v-if="festival?.events.filter(filterPastEvents).length"
+          >
             Past events
           </h3>
           <event-card
