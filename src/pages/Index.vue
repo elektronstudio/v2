@@ -14,15 +14,20 @@ const upcomingEvents = computed(() =>
 </script>
 
 <template>
-  <horizontal
-    style="padding: var(--page-padding); --cols: auto auto 1fr; gap: 72px"
-  >
-    <vertical>
+  <horizontal style="--cols: auto auto 1fr; gap: 72px">
+    <vertical
+      style="
+        justify-content: end;
+        padding: var(--p-6);
+        border: 1px solid var(--gray-500);
+      "
+    >
       <logo />
-      <div />
+      <div style="justify-content: end; justify-self: auto">
+        <page-card v-for="(page, i) in strapiPages" :key="i" :page="page" />
+      </div>
       <social />
       <div />
-      <page-card v-for="(page, i) in strapiPages" :key="i" :page="page" />
     </vertical>
     <vertical>
       <!-- <pre>{{ strapiFestivals }}</pre> -->
