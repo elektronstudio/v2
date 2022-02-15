@@ -1,4 +1,5 @@
 import "./app.css";
+import "elektro/style.css";
 
 import { createApp, defineAsyncComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";

@@ -14,19 +14,32 @@ const upcomingEvents = computed(() =>
 </script>
 
 <template>
-  <horizontal
-    style="padding: var(--page-padding); --cols: auto auto 1fr; gap: 72px"
-  >
-    <vertical>
+  <horizontal style="--cols: auto auto 1fr; gap: 0">
+    <vertical
+      style="
+        padding: var(--p-6);
+        justify-content: end;
+        border-right: 1px solid var(--gray-500);
+      "
+    >
       <logo />
-      <div />
+      <div style="justify-content: end; justify-self: auto">
+        <page-card v-for="(page, i) in strapiPages" :key="i" :page="page" />
+      </div>
       <social />
       <div />
-      <page-card v-for="(page, i) in strapiPages" :key="i" :page="page" />
     </vertical>
-    <vertical>
-      <!-- <pre>{{ strapiFestivals }}</pre> -->
-      <horizontal style="--cols: 1fr 1fr; gap: 16px" v-if="strapiFestivals">
+    <vertical
+      style="
+        padding: var(--p-6);
+        border: 1px solid var(--gray-500);
+        transform: translateX(-1px);
+      "
+    >
+      <horizontal
+        style="--cols: 1fr 1fr; gap: var(--gap-4)"
+        v-if="strapiFestivals"
+      >
         <festival-card
           v-for="(festival, i) in strapiFestivals"
           :key="i"
@@ -34,7 +47,15 @@ const upcomingEvents = computed(() =>
         />
       </horizontal>
     </vertical>
-    <vertical style="gap: 32px" v-if="upcomingEvents.length">
+    <vertical
+      style="
+        border: 1px solid var(--gray-500);
+        transform: translateX(-2px);
+        gap: 24px;
+        padding: var(--p-6);
+      "
+      v-if="upcomingEvents.length"
+    >
       <event-card
         v-for="(event, i) in upcomingEvents"
         :key="i"

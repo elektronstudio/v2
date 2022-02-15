@@ -1,4 +1,5 @@
 <script setup>
+import { EWindowBorder } from "elektro";
 import {
   loadEvents,
   loadMessages,
@@ -24,6 +25,7 @@ plausible.enableAutoPageviews();
         <component :is="Component" />
       </Transition>
     </RouterView>
+    <EWindowBorder />
   </div>
 </template>
 

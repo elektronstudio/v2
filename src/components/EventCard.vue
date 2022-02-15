@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps, computed } from "vue";
+import { ETitle } from "elektro";
 
 const props = defineProps({
   festival: { type: Object },
@@ -32,7 +33,7 @@ const imageUrl = computed(() => {
     <div style="height: 8px" />
     <router-link :to="eventRoute">
       <badge v-if="event.urgency === 'now'">live</badge>
-      <h2 v-html="event.title" />
+      <ETitle v-html="event.title" />
     </router-link>
     <event-data :festival="festival" :event="event" />
   </vertical>
