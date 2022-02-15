@@ -14,8 +14,12 @@ import { messages, ws, safeJsonParse, unique } from "../lib";
 function downloadCSV(data, filename) {
   let csvContent = "data:text/csv;charset=utf-8,";
   csvContent += [
-    Object.keys(data[0]).join(";"),
-    ...data.map((item) => Object.values(item).join(";")),
+    Object.keys(data[0]).join(","),
+    ...data.map((item) =>
+      Object.values(item)
+        .map((i) => `"${i}"`)
+        .join(",")
+    ),
   ]
     .join("\n")
     .replace(/(^\[)|(\]$)/gm, "");
