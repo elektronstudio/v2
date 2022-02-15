@@ -4,8 +4,24 @@ import { format } from "date-fns";
 import { useStorage } from "@vueuse/core";
 import { messages, ws, safeJsonParse, unique } from "../lib";
 
-const channel = "eksperiment";
-const types = "DATA_1";
+function downloadCSV(data, filename) {
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += [
+    Object.keys(data[0]).join(";"),
+    ...data.map((item) => Object.values(item).join(";")),
+  ]
+    .join("\n")
+    .replace(/(^\[)|(\]$)/gm, "");
+
+  const encodedData = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedData);
+  link.setAttribute("download", filename);
+  link.click();
+}
+
+const channel = ref("eksperiment");
+const types = ref("DATA_1");
 
 const captureId = ref(null);
 
@@ -32,9 +48,15 @@ const onEnd = () => {
   captureId.value = null;
 };
 
+const onDownload = () => {
+  if (selectedCaptureId.value) {
+    downloadCSV(selectedCaptures.value, `${selectedCaptureId.value}.csv`);
+  }
+};
+
 const isCapture = (m) =>
-  m.channel === channel &&
-  types
+  m.channel === channel.value &&
+  types.value
     .split(",")
     .map((t) => t.trim())
     .includes(m.type);
@@ -63,6 +85,15 @@ ws.addEventListener("message", ({ data }) => {
     <horizontal style="--cols: 1fr 2fr">
       <vertical style="padding: 32px">
         <h3>Current capture</h3>
+        <div>
+          <div>Channel</div>
+          <input type="text" v-model="channel" />
+        </div>
+
+        <div>
+          <div>Types,comma,separated</div>
+          <input type="text" v-model="types" />
+        </div>
 
         <p v-if="!captureId">Capture OFF</p>
         <p v-if="captureId" style="color: red">Capture ON</p>
@@ -83,10 +114,11 @@ ws.addEventListener("message", ({ data }) => {
           {{ captureId }}.csv
         </div>
 
+        <br />
         <h3>Previous captures</h3>
 
         <div
-          v-for="id in captureIds"
+          v-for="id in captureIds.sort().reverse()"
           class="captureCard"
           :key="id"
           @click="selectedCaptureId = id"
@@ -95,7 +127,11 @@ ws.addEventListener("message", ({ data }) => {
           {{ id }}.csv
         </div>
       </vertical>
-      <vertical>
+      <vertical style="padding: 32px">
+        <h2 v-if="selectedCaptureId">{{ selectedCaptureId }}.csv</h2>
+        <button-medium v-if="selectedCaptureId" @click="onDownload">
+          Download
+        </button-medium>
         <pre>{{ selectedCaptures }}</pre>
       </vertical>
     </horizontal>
@@ -111,7 +147,6 @@ ws.addEventListener("message", ({ data }) => {
 .captureCard {
   padding: 8px 16px;
   border-radius: 4px;
-  font-family: monospace;
   font-size: 0.8em;
   cursor: pointer;
 }
