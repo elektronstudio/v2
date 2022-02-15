@@ -9,6 +9,7 @@ const submitted = useStorage("elektron_submitted", []);
 const props = defineProps({
   channel: { type: String },
   controls: { type: String },
+  private: { type: Boolean, default: false },
 });
 
 const parseControls = (controlsConfig) => {
@@ -136,7 +137,7 @@ console.log(controls.value);
     </div>
   </div>
 
-  <div style="width: 100%">
+  <div style="width: 100%" v-if="props.private">
     <div v-for="(c, i) in controls.filter((c) => c.show !== 'pre')" :key="i">
       <div v-if="c.title">{{ c.title }}</div>
       <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
