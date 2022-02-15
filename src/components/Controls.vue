@@ -9,6 +9,7 @@ const submitted = useStorage("elektron_submitted", []);
 const props = defineProps({
   channel: { type: String },
   controls: { type: String },
+  private: { type: Boolean, default: false },
 });
 
 const parseControls = (controlsConfig) => {
@@ -96,14 +97,48 @@ const onFormSubmit = () => {
     submitted.value = unique([...submitted.value, props.channel]);
   }
 };
+console.log(controls.value);
 </script>
 
 <template>
-  <!-- <button-medium @click="submitted = []" v-if="isSubmitted"
+  <button-medium @click="submitted = []" v-if="isSubmitted"
     >Tagasi küsimuste juurde</button-medium
-  > -->
-  <div style="width: 100%" v-if="!isSubmitted">
-    <div v-for="(c, i) in controls" :key="i">
+  >
+  <div style="width: 100%" v-if="!isSubmitted" class="preControls">
+    <div v-for="(c, i) in controls.filter((c) => c.show === 'pre')" :key="i">
+      <div v-if="c.title">{{ c.title }}</div>
+      <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
+      <div>
+        <input
+          v-if="c.control !== 'submit'"
+          :type="c.control === 'slider' ? 'range' : 'text'"
+          v-model.number="c.value.value"
+          :min="c.min"
+          :max="c.max"
+          :step="c.step"
+        />
+        &nbsp;
+        <button-medium
+          v-if="!hasSubmit && c.control === 'text'"
+          @click="onSubmit(i)"
+        >
+          Saada
+        </button-medium>
+      </div>
+      <button-medium v-if="c.control === 'submit'" @click="onFormSubmit()">
+        Saada
+      </button-medium>
+      <div
+        v-if="c.labels"
+        style="display: flex; justify-content: space-between"
+      >
+        <div v-for="label in c.labels" :key="label">{{ label }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="width: 100%" v-if="props.private">
+    <div v-for="(c, i) in controls.filter((c) => c.show !== 'pre')" :key="i">
       <div v-if="c.title">{{ c.title }}</div>
       <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
       <div>
@@ -136,17 +171,19 @@ const onFormSubmit = () => {
   </div>
 </template>
 
-<!--
-display: block;
-gap: 12px;
-width: 100%;
-position: fixed;
-padding: 64px;
-top: 0;
-right: 0;
-bottom: 0;
-left: 0;
-z-index: 100000;
-background: rgba(0, 0, 0, 0.9);
-overflow: auto;
--->
+<style>
+.preControls {
+  display: block;
+  gap: 12px;
+  width: 100%;
+  position: fixed;
+  padding: 64px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100000;
+  background: rgba(0, 0, 0, 0.9);
+  overflow: auto;
+}
+</style>

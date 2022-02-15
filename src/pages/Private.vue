@@ -55,6 +55,7 @@ const activeStream = ref(0);
           v-if="event.controls"
           :channel="route.params.event_slug"
           :controls="event.controls"
+          :private="true"
         />
         <vertical v-html="event?.description_estonian" />
         <h3 v-if="event?.description_estonian && event?.description_english">
