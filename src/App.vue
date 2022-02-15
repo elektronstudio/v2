@@ -1,6 +1,5 @@
 <script setup>
-import * as E from "elektro";
-console.log({ ...E });
+import { EWindowBorder } from "elektro";
 import {
   loadEvents,
   loadMessages,
@@ -26,8 +25,8 @@ plausible.enableAutoPageviews();
         <component :is="Component" />
       </Transition>
     </RouterView>
+    <EWindowBorder />
   </div>
-  <e-window-border />
 </template>
 
 <style>
