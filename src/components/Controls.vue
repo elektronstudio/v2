@@ -104,7 +104,11 @@ console.log(controls.value);
   <button-medium @click="submitted = []" v-if="isSubmitted"
     >Tagasi küsimuste juurde</button-medium
   >
-  <div style="width: 100%" v-if="!isSubmitted" class="preControls">
+  <div
+    style="width: 100%"
+    v-if="!isSubmitted && controls.filter((c) => c.show === 'pre').length"
+    class="preControls"
+  >
     <div v-for="(c, i) in controls.filter((c) => c.show === 'pre')" :key="i">
       <div v-if="c.title">{{ c.title }}</div>
       <div style="opacity: 0.5; font-size: 0.9rem">{{ c.description }}</div>
