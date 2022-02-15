@@ -1,7 +1,14 @@
 <script setup lang="ts">
+//@ts-nocheck
 import { toRefs, computed, ref } from "vue";
 import { format } from "date-fns";
 import { useStorage } from "@vueuse/core";
+import { line } from "d3-shape";
+import { scaleTime, scaleLinear, scaleOrdinal } from "d3-scale";
+import { extent } from "d3-array";
+import { add } from "date-fns";
+import { interpolatePlasma } from "d3-scale-chromatic";
+
 import { messages, ws, safeJsonParse, unique } from "../lib";
 
 function downloadCSV(data, filename) {
@@ -35,7 +42,7 @@ const selectedCaptures = computed(() => {
       (c) => c.captureId === selectedCaptureId.value
     );
   }
-  return null;
+  return [];
 });
 
 const formatCaptureName = (date) => format(date, "dd_MM_y__HH_mm_ss");
@@ -79,12 +86,56 @@ ws.addEventListener("message", ({ data }) => {
     ];
   }
 });
+
+const width = 500;
+const height = 100;
+const p = 5;
+
+// const data = ref([
+//   { value: -2, userId: "a12", datetime: add(new Date(), { seconds: 1 }) },
+//   { value: 421, userId: "a12", datetime: add(new Date(), { seconds: 10 }) },
+//   { value: 421, userId: "a12", datetime: add(new Date(), { seconds: 40 }) },
+//   { value: 1000, userId: "ffa", datetime: add(new Date(), { seconds: 1 }) },
+//   { value: 212, userId: "ffa", datetime: add(new Date(), { seconds: 10 }) },
+//   { value: 21, userId: "ffa", datetime: add(new Date(), { seconds: 40 }) },
+// ]);
+
+const xDomain = computed(() =>
+  extent(selectedCaptures.value, (d) => new Date(d.datetime))
+);
+const yDomain = computed(() =>
+  extent(selectedCaptures.value, (d) => d.value).reverse()
+);
+const userIds = computed(() => extent(selectedCaptures.value, (d) => d.userId));
+
+const x = computed(() =>
+  scaleTime()
+    .domain(xDomain.value)
+    .range([p, width - p])
+);
+
+const y = computed(() =>
+  scaleLinear()
+    .domain(yDomain.value)
+    .range([p, height - p])
+);
+
+const color = (userId) =>
+  interpolatePlasma(
+    scaleOrdinal().domain(userIds.value).range([0.2, 0.8])(userId)
+  );
+
+const d = line()
+  .x((d) => x.value(new Date(d.datetime)))
+  .y((d) => y.value(d.value));
+
+const showLogs = ref(false);
 </script>
 <template>
   <div>
     <horizontal style="--cols: 1fr 2fr">
       <vertical style="padding: 32px">
-        <h3>Current capture</h3>
+        <h3>Start new capture</h3>
         <div>
           <div>Channel</div>
           <input type="text" v-model="channel" />
@@ -132,7 +183,38 @@ ws.addEventListener("message", ({ data }) => {
         <button-medium v-if="selectedCaptureId" @click="onDownload">
           Download
         </button-medium>
-        <pre>{{ selectedCaptures }}</pre>
+        <br />
+        <svg :width="width" :height="height">
+          <path
+            v-for="(userId, i) in userIds"
+            :key="i"
+            :d="d(selectedCaptures.filter((f) => f.userId === userId))"
+            :stroke="color(userId)"
+            stroke-width="2"
+            fill="none"
+          />
+        </svg>
+        <br />
+        <div
+          v-for="c in selectedCaptures"
+          :key="c.id"
+          style="font-family: monospace; font-size: 0.8em"
+        >
+          <span :style="{ color: color(c.userId) }">●</span>&emsp;<span
+            style="opacity: 0.3"
+            >{{ c.userId }} {{ c.datetime }}</span
+          >
+          {{ c.value }}
+        </div>
+        <button-medium
+          v-if="!showLogs && selectedCaptureId"
+          @click="showLogs = true"
+        >
+          Show logs
+        </button-medium>
+        <pre v-if="showLogs" style="font-size: 0.8em">{{
+          selectedCaptures
+        }}</pre>
       </vertical>
     </horizontal>
     <layout>
