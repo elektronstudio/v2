@@ -17,6 +17,10 @@ const routes = [
     component: () => import(`./pages/Admin.vue`),
   },
   {
+    path: "/graph",
+    component: () => import(`./pages/Graph.vue`),
+  },
+  {
     path: "/synth",
     component: () => import(`./pages/Synth.vue`),
   },
