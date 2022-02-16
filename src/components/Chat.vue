@@ -51,7 +51,7 @@ const { chats, newMessage, onNewMessage, scrollRef, textareaRef } = useChat(
 <style>
 .chat {
   grid-template-rows: 1fr auto auto;
-  height: 70vh;
+  height: 80vh;
 }
 .chat-cards {
   display: grid;

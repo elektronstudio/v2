@@ -79,10 +79,7 @@ const imageUrl = computed(() => {
           :event="event"
           :image="true"
         />
-        <ETitle
-          style="opacity: 0.5; margin-top: 24px"
-          v-if="pastEvents?.length"
-        >
+        <ETitle style="opacity: 0.5" v-if="pastEvents?.length">
           Past events
         </ETitle>
         <event-card
@@ -95,13 +92,14 @@ const imageUrl = computed(() => {
       </vertical>
       <!-- <users /> -->
       <layout>
-        <template #top-left>
-          <back-button />
-        </template>
+        <template #top-left
+          ><back-button style="transform: translateY(32px)"
+        /></template>
         <template #top-right> </template>
         <template #bottom-left>
           <theme-button />
         </template>
+        <template #bottom-right> </template>
       </layout>
     </horizontal>
   </div>
