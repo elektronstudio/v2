@@ -29,4 +29,38 @@ export const config = {
   userUpdateRate: 10 * 30 * 1000, // was 30 * 1000
   userUpdatedSinceLimit: 10 * 30 * 1000, // was 30 * 1000
   messageDelay: 150, // was 50
+  navItems: [
+    {
+      name: "eˉlektron",
+      path: "",
+    },
+    {
+      name: "Lavastused",
+      path: "",
+    },
+    {
+      name: "Festivalid",
+      path: "",
+    },
+    {
+      name: "Projektid",
+      path: "",
+    },
+    {
+      name: "Kava",
+      path: "",
+    },
+    {
+      name: "Meist",
+      path: "",
+    },
+    {
+      name: "En",
+      path: "",
+    },
+    {
+      name: "Live",
+      path: "",
+    },
+  ],
 };

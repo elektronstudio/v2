@@ -50,7 +50,7 @@ const activeStream = ref(0);
       gap: 0,
     }"
   >
-    <vertical style="padding: var(--gap-6)">
+    <vertical style="padding: var(--gap-6); padding-left: var(--gap-12)">
       <div v-if="hasTicketOrFree" style="width: 100%">
         <component
           v-for="(src, i) in stream.streamurls"
@@ -161,11 +161,9 @@ const activeStream = ref(0);
       <template #top-left>
         <back-button :to="festivalRoute" />
       </template>
-      <template #top-right>
-        <theme-button />
-      </template>
+      <template #top-right> </template>
       <template #bottom-left>
-        <!-- <users-button /> -->
+        <theme-button />
       </template>
     </layout>
   </horizontal>

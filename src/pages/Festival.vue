@@ -1,12 +1,13 @@
 <script setup>
 import { toRefs, computed } from "vue";
 import { useRoute } from "vue-router";
-import { ETitle, EContent } from "elektro";
+import { ENav, ETitle, EContent } from "elektro";
 import {
   strapiFestivals,
   filterUpcomingEvents,
   filterPastEvents,
   sortOlderFirst,
+  config,
 } from "../lib";
 
 const { params } = toRefs(useRoute());
@@ -29,64 +30,79 @@ const imageUrl = computed(() => {
 });
 </script>
 <template>
-  <horizontal
-    style="--cols: auto 1fr 1fr; gap: 0"
-    :style="{ '--cols': imageUrl ? 'auto 1fr 1fr' : '140px 1fr 1.5fr' }"
-  >
-    <div style="padding: var(--p-5); border: 1px solid var(--gray-500)">
-      <img
-        v-if="imageUrl"
-        :src="imageUrl"
-        style="width: 256px; height: 256px; aspect-ratio: 1; object-fit: cover"
-      />
-    </div>
-    <vertical style="padding: var(--p-5)">
-      <ETitle size="lg" v-html="festival?.title" />
-      <EContent
-        style="letter-spacing: 0.01em"
-        v-html="festival?.description_estonian"
-      />
-      <EContent v-html="festival?.description_english" />
-    </vertical>
-    <vertical
-      style="
-        border: 1px solid var(--gray-500);
-        padding: var(--p-5);
-        transform: translateX(-1px);
-      "
+  <div>
+    <ENav :navItems="config.navItems" />
+    <horizontal
+      style="--cols: auto 1fr 1fr; gap: 0"
+      :style="{ '--cols': imageUrl ? 'auto 1fr 1fr' : '140px 1fr 1.5fr' }"
     >
-      <ETitle style="opacity: 0.5" v-if="upcomingEvents?.length"
-        >Upcoming events</ETitle
+      <div
+        style="
+          padding: var(--p-5);
+          border: 1px solid var(--gray-500);
+          transform: translate(0, -1px);
+        "
       >
-      <event-card
-        v-for="(event, i) in upcomingEvents"
-        :key="i"
-        :festival="festival"
-        :event="event"
-        :image="true"
-      />
-      <ETitle style="opacity: 0.5" v-if="pastEvents?.length"
-        >Past events</ETitle
+        <img
+          v-if="imageUrl"
+          :src="imageUrl"
+          style="
+            width: 256px;
+            height: 256px;
+            aspect-ratio: 1;
+            object-fit: cover;
+          "
+        />
+      </div>
+      <vertical style="padding: var(--p-5)">
+        <ETitle size="lg" v-html="festival?.title" />
+        <EContent
+          style="letter-spacing: 0.01em"
+          v-html="festival?.description_estonian"
+        />
+        <EContent v-html="festival?.description_english" />
+      </vertical>
+      <vertical
+        style="
+          border: 1px solid var(--gray-500);
+          padding: var(--p-5);
+          transform: translate(-1px, -1px);
+        "
       >
-      <event-card
-        v-for="(event, i) in pastEvents"
-        :key="i"
-        :festival="festival"
-        :event="event"
-        :image="true"
-      />
-    </vertical>
-    <!-- <users /> -->
-    <layout>
-      <template #top-left>
-        <back-button />
-      </template>
-      <template #top-right>
-        <theme-button />
-      </template>
-      <template #bottom-left>
-        <!-- <users-button /> -->
-      </template>
-    </layout>
-  </horizontal>
+        <ETitle style="opacity: 0.5" v-if="upcomingEvents?.length"
+          >Upcoming events</ETitle
+        >
+        <event-card
+          v-for="(event, i) in upcomingEvents"
+          :key="i"
+          :festival="festival"
+          :event="event"
+          :image="true"
+        />
+        <ETitle
+          style="opacity: 0.5; margin-top: 24px"
+          v-if="pastEvents?.length"
+        >
+          Past events
+        </ETitle>
+        <event-card
+          v-for="(event, i) in pastEvents"
+          :key="i"
+          :festival="festival"
+          :event="event"
+          :image="true"
+        />
+      </vertical>
+      <!-- <users /> -->
+      <layout>
+        <template #top-left>
+          <back-button />
+        </template>
+        <template #top-right> </template>
+        <template #bottom-left>
+          <theme-button />
+        </template>
+      </layout>
+    </horizontal>
+  </div>
 </template>

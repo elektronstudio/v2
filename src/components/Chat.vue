@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, toRefs } from "vue";
 import { useChat, userName, onUserNameChange } from "../lib";
-
+import { EButton } from "elektro";
 const props = defineProps({
   channel: { type: String },
   sendtype: { type: String, default: "CHAT" },
@@ -30,25 +30,34 @@ const { chats, newMessage, onNewMessage, scrollRef, textareaRef } = useChat(
       <span @click="onUserNameChange" style="cursor: pointer">Change</span>
     </div>
     <textarea
-      class="chat"
-      style="width: 100%"
+      style="
+        width: 100%;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        background: var(--bg);
+        border: 2px solid var(--fg);
+        outline: none;
+        padding: var(--p-2);
+        border-radius: 2px;
+      "
       ref="textareaRef"
       v-model="newMessage"
       placeholder="Write a chat message here"
     ></textarea>
-    <button-medium @click="onNewMessage">Send chat message</button-medium>
+    <EButton size="sm" @click="onNewMessage">Send chat message</EButton>
   </vertical>
 </template>
 
 <style>
 .chat {
   grid-template-rows: 1fr auto auto;
-  height: 80vh;
+  height: 70vh;
 }
 .chat-cards {
   display: grid;
   grid-auto-rows: min-content;
   gap: 8px;
   overflow: auto;
+  opacity: 0.8;
 }
 </style>
