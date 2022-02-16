@@ -29,11 +29,11 @@ const parseControls = (controlsConfig) => {
         control: chunk.control === "text" ? "text" : "slider",
         title: "",
         description: "",
-        value: ref(chunk.control === "text" ? "" : 0),
         min: 0,
         max: chunk.max > chunk.min ? chunk.max : 10,
-        step: 1,
+        step: "any",
         ...chunk,
+        value: ref(chunk.control === "text" ? "" : chunk.value ?? 0),
         labels: chunk.labels
           ? chunk.labels.split(",").map((l) => l.trim())
           : null,
