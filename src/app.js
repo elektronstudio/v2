@@ -14,6 +14,10 @@ const routes = [
     component: () => import(`./pages/Index.vue`),
   },
   {
+    path: "/admin",
+    component: () => import(`./pages/Admin.vue`),
+  },
+  {
     path: "/synth",
     component: () => import(`./pages/Synth.vue`),
   },
