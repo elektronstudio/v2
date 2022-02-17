@@ -59,14 +59,14 @@ const { status } = useTicket(festival, event);
         :href="festival?.fienta_url"
         target="_black"
       >
-        Get festival ticket
+        Get a ticket from Fienta
       </a>
       <a
         v-if="status === 'REQUIRES_TICKET' && event?.fienta_url"
         :href="event?.fienta_url"
         target="_black"
       >
-        Get event ticket
+        Get a ticket from Fienta
       </a>
     </flex>
     <flex style="opacity: 0.5; font-size: 0.85em">
