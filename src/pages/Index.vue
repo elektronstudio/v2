@@ -19,11 +19,7 @@ const upcomingEvents = computed(() =>
     <!-- <ENav :navItems="config.navItems" /> -->
     <horizontal style="--cols: auto auto 1fr; gap: 0">
       <vertical
-        style="
-          padding: var(--p-6);
-          justify-content: end;
-          border-right: 1px solid var(--gray-500);
-        "
+        style="padding: var(--p-6); border-right: 1px solid var(--gray-500)"
       >
         <logo />
         <div style="justify-content: end; justify-self: auto">
