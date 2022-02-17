@@ -26,8 +26,8 @@ import { config } from "../lib";
 .strapi-social {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  justify-content: center;
-  /* gap: 8px; */
+  width: 100%;
+  gap: var(--gap-2) 0;
 }
 @media (max-width: 800px) {
   .strapi-social {
@@ -36,14 +36,12 @@ import { config } from "../lib";
 }
 .strapi-social > a {
   display: grid;
-  place-items: center;
-  /* border: 2px solid var(--fg); */
   color: var(--fg);
-  width: 48px;
-  height: 48px;
+  width: var(--w-5);
+  height: var(--h-5);
   border-radius: 10000px;
 }
 .strapi-social > a > svg {
-  transform: scale(1.5);
+  transform: scale(0.7);
 }
 </style>

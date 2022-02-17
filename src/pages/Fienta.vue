@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { whenever } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { useRouteQuery } from "@vueuse/router";
+import { EButton } from "elektro";
 import {
   tickets,
   getStrapi,
@@ -135,9 +136,9 @@ const submitCode = () => {
         class="chat"
         v-model="manualCode"
         placeholder="Enter ticket code"
-        style="width: 200px; height: auto"
+        style="width: 200px; height: auto; font-family: var(--font-mono)"
       />
-      <button-big @click="submitCode">Submit ticket code</button-big>
+      <EButton @click="submitCode">Submit ticket code</EButton>
       <div />
       <a
         v-if="config.fientaPublicUrl"

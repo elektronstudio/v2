@@ -1,7 +1,8 @@
 <script setup>
 import { toRefs, computed } from "vue";
 import { useRoute } from "vue-router";
-import { strapiPages } from "../lib";
+import { ETitle, ENav } from "elektro";
+import { strapiPages, config } from "../lib";
 
 const { params } = toRefs(useRoute());
 const page = computed(() =>
@@ -9,21 +10,24 @@ const page = computed(() =>
 );
 </script>
 <template>
-  <horizontal style="padding: 48px; --cols: 1fr 5fr 1fr">
-    <div />
-    <vertical>
-      <h1 style="font-size: 80px; line-height: 1em" v-html="page?.title" />
-      <vertical v-html="page?.description_estonian" />
-      <vertical v-html="page?.description_english" />
-    </vertical>
-    <users />
-    <layout>
-      <template #top-left>
-        <back-button />
-      </template>
-      <template #bottom-left>
-        <users-button />
-      </template>
-    </layout>
-  </horizontal>
+  <div>
+    <!-- <ENav :navItems="config.navItems" /> -->
+    <horizontal style="padding: 48px; --cols: 1fr 5fr 1fr">
+      <div />
+      <vertical>
+        <ETitle size="lg" v-html="page?.title" />
+        <EContent v-html="page?.description_estonian" />
+        <EContent v-html="page?.description_english" />
+      </vertical>
+      <users />
+      <layout>
+        <template #top-left
+          ><back-button style="transform: translateY(0px)"
+        /></template>
+        <template #bottom-left>
+          <theme-button />
+        </template>
+      </layout>
+    </horizontal>
+  </div>
 </template>

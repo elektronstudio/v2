@@ -10,9 +10,10 @@ defineProps({ chat: { type: Object } });
     </smaller>
     <small
       style="
-        border: 2px solid var(--fgdark);
-        border-radius: 4px;
+        border: 1px solid var(--fgdark);
+        border-radius: 2px;
         padding: 8px 12px;
+        font-family: var(--font-mono);
       "
       v-html="formatMarkdown(chat.value)"
     />
