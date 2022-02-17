@@ -22,7 +22,7 @@ const page = computed(() =>
       <users />
       <layout>
         <template #top-left
-          ><back-button style="transform: translateY(32px)"
+          ><back-button style="transform: translateY(0px)"
         /></template>
         <template #bottom-left>
           <theme-button />
