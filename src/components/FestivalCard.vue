@@ -10,9 +10,17 @@ const festivalRoute = computed(() =>
 );
 
 const bgImageStyle = computed(() => {
+  if (props.festival.slug === "experiment") {
+    const i = props.festival.images;
+    console.log(i[0].url);
+  }
+  const image =
+    props.festival?.images?.[0]?.formats?.small?.url ??
+    props.festival?.images?.[0]?.url ??
+    "";
   return props.festival?.images[0]
     ? {
-        backgroundImage: `url(${props.festival?.images?.[0]?.formats?.small?.url})`,
+        backgroundImage: `url(${image})`,
       }
     : null;
 });
@@ -41,6 +49,15 @@ const bgImageStyle = computed(() => {
   text-align: center;
   border-radius: var(--rounded-lg);
   padding: 16px;
+}
+@media (max-width: 800px) {
+  .strapi-festival {
+    width: 100% !important;
+    height: auto;
+    min-width: 100%;
+    max-width: 100%;
+    aspect-ratio: 1;
+  }
 }
 .strapi-festival > * {
   width: 100%;

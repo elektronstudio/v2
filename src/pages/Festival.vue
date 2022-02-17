@@ -24,9 +24,11 @@ const pastEvents = computed(() =>
 );
 
 const imageUrl = computed(() => {
-  return festival.value?.images[0]
-    ? festival.value.images[0].formats.small.url
-    : "";
+  const image =
+    festival.value?.images?.[0]?.formats?.small?.url ??
+    festival.value?.images?.[0]?.url ??
+    "";
+  return image;
 });
 </script>
 <template>

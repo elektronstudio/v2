@@ -24,10 +24,11 @@ import { config } from "../lib";
 
 <style scoped>
 .strapi-social {
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
-  gap: var(--gap-2) 0;
+  gap: var(--gap-1);
+  flex-wrap: wrap;
 }
 @media (max-width: 800px) {
   .strapi-social {
