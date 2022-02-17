@@ -52,9 +52,7 @@ const { status } = useTicket(festival, event);
       }"
     >
       <icon-ticket />
-      <div v-if="status === 'HAS_FESTIVAL_TICKET'">
-        You have a festival ticket
-      </div>
+      <div v-if="status === 'HAS_FESTIVAL_TICKET'">You have a ticket</div>
       <div v-if="status === 'HAS_EVENT_TICKET'">You have an event ticket</div>
       <a
         v-if="status === 'REQUIRES_TICKET' && festival?.fienta_url"

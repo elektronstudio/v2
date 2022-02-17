@@ -31,7 +31,7 @@ const imageUrl = computed(() => {
 </script>
 <template>
   <div>
-    <ENav :navItems="config.navItems" />
+    <!-- <ENav :navItems="config.navItems" /> -->
     <horizontal
       style="--cols: auto 1fr 1fr; gap: 0"
       :style="{ '--cols': imageUrl ? 'auto 1fr 1fr' : '140px 1fr 1.5fr' }"
@@ -92,9 +92,9 @@ const imageUrl = computed(() => {
       </vertical>
       <!-- <users /> -->
       <layout>
-        <template #top-left
-          ><back-button style="transform: translateY(32px)"
-        /></template>
+        <template #top-left>
+          <back-button style="transform: translateY(0px)" />
+        </template>
         <template #top-right> </template>
         <template #bottom-left>
           <theme-button />

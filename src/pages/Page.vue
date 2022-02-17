@@ -11,8 +11,7 @@ const page = computed(() =>
 </script>
 <template>
   <div>
-    <ENav :navItems="config.navItems" />
-
+    <!-- <ENav :navItems="config.navItems" /> -->
     <horizontal style="padding: 48px; --cols: 1fr 5fr 1fr">
       <div />
       <vertical>

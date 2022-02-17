@@ -16,7 +16,7 @@ const upcomingEvents = computed(() =>
 
 <template>
   <div>
-    <ENav :navItems="config.navItems" />
+    <!-- <ENav :navItems="config.navItems" /> -->
     <horizontal style="--cols: auto auto 1fr; gap: 0">
       <vertical
         style="
