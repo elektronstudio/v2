@@ -74,5 +74,11 @@ const { status } = useTicket(festival, event);
       {{ formatDate(event.start_at) }} →
       {{ formatDate(event.end_at) }}
     </flex>
+    <ButtonMedium
+      style="margin-top: 8px"
+      v-if="status === 'HAS_FESTIVAL_TICKET' || status === 'HAS_EVENT_TICKET'"
+    >
+      Go to event →
+    </ButtonMedium>
   </vertical>
 </template>

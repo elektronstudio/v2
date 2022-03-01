@@ -95,7 +95,7 @@ const imageUrl = computed(() => {
       <!-- <users /> -->
       <layout>
         <template #top-left>
-          <back-button style="transform: translateY(0px)" />
+          <a href="https://elektron.art"><ButtonMedium>←</ButtonMedium></a>
         </template>
         <template #top-right> </template>
         <template #bottom-left>
