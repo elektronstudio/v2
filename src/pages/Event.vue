@@ -30,9 +30,10 @@ const festivalRoute = computed(() => `/${festival.value?.slug}`);
 
 const { status } = useTicket(festival, event);
 
-const hasTicketOrFree = computed(() =>
-  ["HAS_FESTIVAL_TICKET", "HAS_EVENT_TICKET", "FREE"].includes(status.value)
-);
+const hasTicketOrFree = computed(() => {
+  //["HAS_FESTIVAL_TICKET", "HAS_EVENT_TICKET", "FREE"].includes(status.value)
+  return true
+});
 
 const imageUrl = computed(() => {
   return event.value?.images.length
