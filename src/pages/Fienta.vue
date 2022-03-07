@@ -32,8 +32,8 @@ const getEventOrFestivalRoute = async (fienta_id) => {
   // @TODO Consider to use
   // await until(strapiFestivals).toBeTruthy();
 
-  const events = await strapi.get("events").json();
-  const festivals = await strapi.get("festivals").json();
+  const events = await strapi.get("events?_limit=-1").json();
+  const festivals = await strapi.get("festivals?_limit=-1").json();
 
   const ticketEvent = events.find(
     (e) => e.fienta_id && e.fienta_id == fienta_id
