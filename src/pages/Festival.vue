@@ -69,7 +69,6 @@ const imageUrl = computed(() => {
           border: 1px solid var(--gray-500);
           padding: var(--p-5);
           transform: translate(-1px, -1px);
-          gap: 32px;
         "
       >
         <ETitle style="opacity: 0.5" v-if="upcomingEvents?.length"

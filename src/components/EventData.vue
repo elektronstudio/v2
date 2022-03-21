@@ -12,7 +12,6 @@ const formatDate = (str) =>
 const props = defineProps({
   festival: { type: Object },
   event: { type: Object },
-  to: { type: String },
 });
 
 const startedAt = props.event?.start_at
@@ -52,7 +51,7 @@ const { status } = useTicket(festival, event);
             : 'var(--ticket)',
       }"
     >
-      <!-- <icon-ticket />
+      <icon-ticket />
       <div v-if="status === 'HAS_FESTIVAL_TICKET'">You have a ticket</div>
       <div v-if="status === 'HAS_EVENT_TICKET'">You have a ticket</div>
       <a
@@ -68,15 +67,18 @@ const { status } = useTicket(festival, event);
         target="_black"
       >
         Get a ticket from Fienta
-      </a> -->
+      </a>
     </flex>
     <flex style="opacity: 0.5; font-size: 0.85em">
       {{ startedAt }}
       {{ formatDate(event.start_at) }} →
       {{ formatDate(event.end_at) }}
     </flex>
-    <RouterLink :to="props.to">
-      <ButtonMedium style="margin-top: 8px"> Go to event → </ButtonMedium>
-    </RouterLink>
+    <ButtonMedium
+      style="margin-top: 8px"
+      v-if="status === 'HAS_FESTIVAL_TICKET' || status === 'HAS_EVENT_TICKET'"
+    >
+      Go to event →
+    </ButtonMedium>
   </vertical>
 </template>

@@ -35,6 +35,6 @@ const imageUrl = computed(() => {
       <badge v-if="event.urgency === 'now'">live</badge>
       <ETitle v-html="event.title" />
     </router-link>
-    <event-data :festival="festival" :event="event" :to="eventRoute" />
+    <event-data :festival="festival" :event="event" />
   </vertical>
 </template>
