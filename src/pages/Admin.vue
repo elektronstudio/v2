@@ -31,7 +31,17 @@ function downloadCSV(data, filename) {
   link.click();
 }
 
-const channel = ref("eksperiment");
+function downloadJSON(data, filename) {
+  let jsonContent = "data:application/json;charset=utf-8,";
+  jsonContent += JSON.stringify(data, null, 2);
+  const encodedData = encodeURI(jsonContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedData);
+  link.setAttribute("download", filename);
+  link.click();
+}
+
+const channel = useStorage("LAB_CHANNEL", "");
 const types = ref("DATA_1");
 
 const captureId = ref(null);
@@ -53,15 +63,22 @@ const formatCaptureName = (date) => format(date, "dd_MM_y__HH_mm_ss");
 
 const onStart = () => {
   captureId.value = formatCaptureName(new Date());
+  selectedCaptureId.value = captureId.value;
 };
 
 const onEnd = () => {
   captureId.value = null;
 };
 
-const onDownload = () => {
+const onDownloadCsv = () => {
   if (selectedCaptureId.value) {
     downloadCSV(selectedCaptures.value, `${selectedCaptureId.value}.csv`);
+  }
+};
+
+const onDownloadJSON = () => {
+  if (selectedCaptureId.value) {
+    downloadJSON(selectedCaptures.value, `${selectedCaptureId.value}.json`);
   }
 };
 
@@ -141,7 +158,7 @@ const showLogs = ref(false);
       <vertical style="padding: 32px">
         <h3>Start new capture</h3>
         <div>
-          <div>Channel</div>
+          <div>Slug</div>
           <input type="text" v-model="channel" />
         </div>
 
@@ -183,11 +200,17 @@ const showLogs = ref(false);
         </div>
       </vertical>
       <vertical style="padding: 32px">
-        <h2 v-if="selectedCaptureId">{{ selectedCaptureId }}.csv</h2>
-        <button-medium v-if="selectedCaptureId" @click="onDownload">
-          Download
-        </button-medium>
+        <div style="display: flex; gap: 16px">
+          <h2 v-if="selectedCaptureId">{{ selectedCaptureId }}.csv</h2>
+          <button-medium v-if="selectedCaptureId" @click="onDownloadCsv">
+            Download CSV
+          </button-medium>
+          <button-medium v-if="selectedCaptureId" @click="onDownloadJSON">
+            Download JSON
+          </button-medium>
+        </div>
         <br />
+        <div v-if="!selectedCaptures.length">Waiting for data...</div>
         <svg :width="width" :height="height">
           <path
             v-for="(userId, i) in userIds"
@@ -205,9 +228,9 @@ const showLogs = ref(false);
           style="font-family: monospace; font-size: 0.8em"
         >
           <span :style="{ color: color(c.userId) }">●</span>&emsp;<span
-            style="opacity: 0.3"
-            >{{ c.userId }} {{ c.datetime }}</span
-          >
+            style="opacity: 0.5"
+            >{{ c.datetime }} {{ c.userId }} {{ c.userName }}
+          </span>
           {{ c.value }}
         </div>
         <button-medium
