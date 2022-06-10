@@ -210,7 +210,9 @@ const showLogs = ref(false);
           </button-medium>
         </div>
         <br />
-        <div v-if="!selectedCaptures.length">Waiting for data...</div>
+        <div v-if="captureId && !selectedCaptures.length">
+          Waiting for data...
+        </div>
         <svg :width="width" :height="height">
           <path
             v-for="(userId, i) in userIds"
